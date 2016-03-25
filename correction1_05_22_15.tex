@@ -1,0 +1,367 @@
+
+\documentclass[11pt]{article}
+%\makeatletter
+%\let\@fnsymbol\@arabic
+%\makeatother
+
+\makeatletter
+\renewcommand*{\@fnsymbol}[1]{\ensuremath{\ifcase#1\or 1\or *\or 2 \or \dagger \or 3 \or **\or \dagger\dagger
+\or \ddagger\ddagger \else\@ctrerr\fi}}
+\makeatother
+
+\hoffset-2.5cm
+\voffset-0.5in
+
+\setlength{\topmargin}{1cm}
+\setlength{\footskip}{1cm}
+\setlength{\textheight}{21cm}
+\setlength{\textwidth}{17cm}
+
+% \usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,latexsym,hyperref}
+\usepackage{graphicx,float,pdfpages,bookmark}
+%\usepackage{harvard}
+%\usepackage{achicago}
+
+\DeclareMathOperator*{\argmax}{argmax}
+
+﻿\begin{document}
+
+\title{Statistical methods of isoform quantification for RNA-Seq experiments}
+\author{Qiang Hu\thanks{Those authors contributed equally.} \thanks{Department of Biostatistics and Bioinformatics, Roswell Park Cancer Institute, Buffalo, NY.} , Eduardo Cort\'es\footnotemark[1] \footnotemark[2] , Tuochuan Dong\thanks{Department of Biostatistics, State University of New York at Buffalo.} , \\ Jeffrey C. Miecznikowski\footnotemark[3] , Song Liu\footnotemark[1] \footnote{Corresponding authors.} , Jianmin Wang\footnotemark[1] \footnotemark[4]}
+\date{}
+
+\maketitle
+\begin{abstract}
+Alternative splicing is a common post-transcriptional event in eukaryotes to generate multiple isoforms from a single gene. Whole transcriptome sequencing (RNA-Seq) makes it possible to quantify both genes and isoforms with unprecedented resolutions. 
+Poission distribution offers a straightforward and intuitive way to model read count data, and has been widely used for isoform specific expression quantification in RNA-Seq studies. 
+%Parametric-based methods using Poisson model \cite{jiang2009statistical} is straightforward and intuitive, and has been proposed. 
+However, over-dispersion and excessive amount of zeroes are often observed in RNA-Seq read count data, which might deteriorate the accuracy of isoform quantification using Poisson model. In this paper we investigate Negative Binomial model and Zero Inflated Poisson model as alternative approaches to accommodate these situations. Using both simulated and real data, we compare the performances of the proposed models with that based on Poission distribution. We further explore the effect of several factors including sequencing coverage, transcript number, and disjointness among different transcripts on the accuracy of isoform quantification.\\
+
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+
+Alternative splicing (AS) is a post-transcriptional process in Eukaryote cells to generate multiple transcripts from a single gene. These transcripts are often called gene isoforms. Alternative splicing is very common and up to  $95\%$  of human multiple exon genes are alternative spliced \cite{pan2008deep}. Different isoforms may have different biological functions that could be related to developmental stages, tissue types, disease status and other factors. Understanding the roles of different isoforms in biological process and their relationship with different phenotypes is crucial in research of human diseases \cite{matlin2005understanding, he2009global}.  \\
+
+
+With the development of next generation sequencing (NGS) technology, whole transcriptome sequencing (RNA-Seq) has become increasinly popular for studying gene expression and alternative splicing. RNA-Seq usually provides tens to hundreds of million reads from fragmented mRNA sequence expressed in biological samples of interests, and these reads allow one to interogate transcritome activitives with unprecedented sensitivity and dynamic ranges.   
+%Alternative splicing analysis of RNA-Seq often involves two different tasks: \textit{de novo} assembly to identify all isoforms (especially when transcriptome of the species is not available) and quantification to determine the abundance of each isoform. In this paper we will focus on isoform quantification assuming that all isoforms are known. \\
+
+Roughly, quantification of isoforms aims to assign each read or read-pair to a specific transcript of a gene, which cannot be readily obtained due to shared exon regions across different transcripts. There are several statistical methods developed to quantify isoform-specific expression for RNASeq data by using a likelihood-based approach to model read count data as Poission distribution \cite{jiang2009statistical}, EM approaches based on different generative graphical models (\cite{roberts2013streaming, li2011rsem}), and Bayesian approaches based on different combinations of prior and data distributions(\cite{glausbitseq}).\\
+
+A straightforward and intuitive way to model the read count data, poission distribution has been widely used for isoform specific expression quantification in RNA-Seq studies \cite{jiang2009statistical, hu2012using}. 
+% Hu2012bioinformatics - http://www.ncbi.nlm.nih.gov/pubmed/22072384
+%due to the discrete nature of read count data. 
+%For RNASeq differential expression analysis, Poission distribution is widely used and is especially suitable for technical repeats (CITATIONS).  
+%Approach proposed by Jiang and Wong\cite{jiang2009statistical} provides a simple and intuitive way to understand the isoform quantification of RNA-Seq experiments. This model takes into account multiple read target transcript alignments and assumes that the read counts follow a Poisson distribution. 
+%Even though Poisson model is easy to calculate and depends only on the mean parameter. 
+An important property of the Poisson distribution is that the expression variance is equal to the mean expression. However, it is widely acknowledged that over-dispersion is prevalent in RNA-Seq data, where the true variance of gene expression is larger 
+than its mean expression values \cite{anders2010differential}. Also, there often exists an excessive amount of zeroes in the read count data, expecially at regions with low sequencing coverage, which might deteriorate the accuracy of isoform quantification 
+based on the Poisson model. In this paper, we propose two alternative models for isoform quantification in RNA-Seq data, Negative Binomial model for overdispersion issue and Zero Inflated Poisson for excessive zeroes counts, and compare their performance with the Poisson model. 
+We also explore several features that might affect their performance in RNA-Seq studies. 
+\\
+
+%This paper has two main aims: introducing two alternative models that overcome issues found in the Poisson model (P) for isoform quantification and analyzing and examining relevant gene features that affect the performance of the proposed methods. 
+
+The rest of the article is organized as follows. In section \ref{background}, notations and the problem of isoform quantification are presented. In section \ref{methods}, existing Poisson model is illustrated, followed by the introduction of two proposed models: Zero Inflation Poisson (ZIP) and Negative Binomial (NB) model. The performances of the proposed methods are evaluated using simulated data in section \ref{simulation} and real data set in section \ref{real}.  In section \ref{results}, the factors that might affect the performance of modeling accuracy are investigated. Section \ref{discussion} contains a brief summary and discussion. 
+%In section <<XXX>>, the   describes the simulation of RNA-Seq experiments and in section \ref{results} we present the model performance and gene features results using simulation data. 
+
+\section{Background}
+\label{background}
+
+One common task in RNA-Seq data analysis is to quantify each isoforms from the same gene which is essentially a problem of assigning each mapped read to the isoform it comes from.  This is easy for reads that lie in a region unique to an isoform such as $r_1$ in Figure \ref{model}.  But for many reads that lie in a region shared by multiple isoforms such as $r_3$ in Figure \ref{model}, the assignment is not trivial. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6,viewport=0 230 800 550,clip]{Model.pdf}
+\caption{Gene-transcript model. Each read has a fixed length of $l$ and dotted line depicts skipped intronic regions.}
+\label{model}
+\end{figure}
+
+A \textbf{read-type} (RT) is a group of reads that have exact same start, end positions and internal introns.  For example, in Figure \ref{model}, $r_3$, $r_4$, $r_5$ are the same RT and $r_6$, $r_7$, $r_8$, $r_9$ share the same RT.  For any gene $g$ with $I$ transcripts of length $\mathbf{l}$, the number of RTs, $J$, can be counted for a sequencing run with a fixed read length.  Furthermore, the relationship between all RTs and transcripts for this gene can be represented as a $J \times I$ incidence matrix $X=(x_{ji})$, where $x_{ji}$ equals $1$ if RT $j$ can be generated from isoform $i$ and $0$ otherwise.  RT frequencies can be represented as $\mathbf{n}$, a vector of length $J$, and for a given RT $j$, it’s observed frequency is:
+
+\[n_j:=n_{j\cdot}=\sum_{i=1}^{I}n_{ji}\text{, for }j=1\ldots J,\]
+  
+\noindent where $n_{ij}$ is the number of reads of RT $j$ from transcript $i$. Although $n_{ij}$ is not observable, it serves as latent variable to ideally express the model.\\ 
+%After sequencing, mapping and quantifying the reads into RTs we obtain a compatibility matrix and also $w$ which is the total number of mapped reads. A matrix $A$ is defined as $A:=wX=\begin{bmatrix}\mathbf{a}_1'\\ \vdots \\ \mathbf{a}_J'\end{bmatrix}$, where $\mathbf{a}_j$ are $I$-length column vectors that would be used to express the models; these ones will be called \textbf{mapping vectors}.\\
+
+Under random sampling assumption, the probability that a read mapped to gene $g$ comes from transcript $i$ is:
+\[p_i=\frac{k_i\widehat{l}_i}{\sum_{i=1}^{I}{k_i\widehat{l}_i}},\] 
+\noindent where $k_i$ is the number of copies and $\widehat{l}_i$ is the effective length of transcript $i$. The effective transcript length is related to read length $l$ and often calculated as $l_i-l+1$. The \textbf{abundance index} of all transcripts is defined as $\boldsymbol{\theta}=(\theta_i)$, where $\theta_i=p_i/\widehat{l}_i$ is the probability a read comes from a specific position of transcript $i$. The abundance index is proportional to the well known RPKM measure (Reads per Kilobase per Million) commonly used in RNA-Seq experiments. This can be formally expressed as: 
+\[\frac{\theta_i}{\theta_j}=\frac{\text{RPKM}_i}{\text{RPKM}_j}\text{, for transcripts } i\text{ and } j.\] 
+Let $w$ be the number of mapped reads for gene $g$, then,
+\[E[n_j]=\sum_{i=1}^IE[n_{ij}]=\sum_{i=1}^Iwx_{ji}\theta_i.\]
+For simplification purposes, we define $A$ as:
+ \[A=\begin{bmatrix}\mathbf{a}_1'\\ \vdots \\ \mathbf{a}_J'\end{bmatrix}=wX,\] where the $\mathbf{a}_j$s are $I$-length column vectors called \textbf{mapping vectors}. The expected frequency of RTs can simply be written as:  
+
+\begin{equation}
+E[n_j]=\boldsymbol{\theta}\cdot\mathbf{a}_j.
+\end{equation}
+
+\noindent If $\widehat{\mathbf{l}}=(\widehat{l}_i)$ is defined as the effective length vector of all transcripts from a gene, we obtain the constraint that would help us express and implement the models:
+\begin{equation}
+\label{constr} 
+\sum_{i=1}^{I}{p_i}=\mathbf{\widehat{l}}\cdot\boldsymbol{\theta}=1.
+\end{equation}
+
+\section{Methods}
+\label{methods}
+
+\subsection{Existing Method}
+
+The Poisson model for single-end reads proposed by\cite{salzman2011statistical} assumes that $n_j$ follows a Poisson distribution with the mean of $\boldsymbol{\theta}\cdot \mathbf{a}_j$:
+%        \[n_j \sim P(\boldsymbol{\theta} \cdot \mathbf{a}_j)\]
+\[P[n_j=n]=\frac{(\boldsymbol{\theta}\cdot\mathbf{a}_j)^n}{n!}e^{-\boldsymbol{\theta}\cdot\mathbf{a}_j}.\]
+For $\boldsymbol{\theta}$, $n_j$’s are independent since each read is assumed to be independently generated, so the joint density function for generating all RTs $n_j$’s is :
+
+\begin{equation}
+f_{\boldsymbol{\theta}}(n_1,\ldots,n_J)=\prod_{j=1}^{J}\frac{(\boldsymbol{\theta}\cdot\mathbf{a}_j)^{n_j}}{n_j!}e^{-\boldsymbol{\theta}\cdot\mathbf{a}_j}.
+\label{P_den}
+\end{equation}
+
+\noindent RTs can be partitioned into $K$ categories according to their mapping vector $\mathbf{a}$ such that all RTs with the same mapping vector form a category $C_k$ with the same expected count value. For category $C_k$, the mapping vector is defined as $\mathbf{a}^{(k)}$ and the total number of reads in $C_k$ is $n_{C_k}=\sum_{j\in C_k}n_j$. The number of RTs in $C_k$, $|C_k|$, is a constant for a specific read length. For a gene with $I$ isoforms and with $K$ categories we know that $K\leq2^I-1$ and also $K\ll J$.  This fact makes the calculation of $\boldsymbol{\theta}$ faster by rewriting (\ref{P_den}) in terms of a gene's $K$ categories as:
+
+\begin{equation}
+\label{P_cat}
+f_{\boldsymbol{\theta}}(n_1,\ldots,n_J)=\underbrace{\prod_{k=1}^K{(\boldsymbol{\theta}\cdot\mathbf{a}^{(k)})^{n_{C_k}}\ e^{-|C_k|\boldsymbol{\theta}\cdot\mathbf{a}^{(k)}}}}_{g_{\boldsymbol{\theta}}(n_{C_1},\ldots,n_{C_K})}\underbrace{\prod_{j=1}^{J}\frac{1}{n_j!}}_{h(n_1,\ldots,n_J)}.
+\end{equation}
+
+From equation (\ref{P_cat}), we can see that $(n_{C_1},\ldots,n_{C_K})$ is a sufficient statistic for $\boldsymbol{\theta}$. 
+ 
+It can further be proved that read categories define a minimal sufficient statistic from the family density generated by the Poisson model \cite{salzman2011statistical}. Based on this minimal sufficient statistic, $\boldsymbol{\theta}$ can be estimated easily.
+
+\subsection{Proposed Methods}
+\label{proposed}
+
+Ideally an RNA-Seq experiment will cover every nucleotide to a certain depth across the transcriptome and the reads are randomly distributed.  But due to low expression levels, some of genes or transcripts have limited coverage and many RTs are not observed in the data.  By plotting RT  frequency for a gene with $3$ transcripts (Figure \ref{example}), we observe an excessive amount of zeroes for RT on some of the categories.  Also it is well known that over-dispersion exists in RNA-Seq count data \cite{anders2010differential}, which means that the variance is not always equal to the mean assumed in the Poisson model.  To account for those two factors, we propose a zero-inflated Poisson model (ZIP), the commonly used negative binomial (NB) model and zero-inflated negative binomial (ZINB) model to fit RTs count data.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.4,viewport=0 0 1150 300,clip]{f_CP_ZIP_ENSG00000100994.pdf}
+  \caption{Zero inflation of RTs for some read categories. The solid line is the density function fitted with P. Sequences at the top of the panels indicate whether a RT group is present (1) or not (0) in the corresponding transcripts; i.e. 1-0-1 indicates RTs can either be present in the first or third transcript.}
+  \label{example}
+\end{figure}
+
+\subsubsection{ZIP}
+\label{zip}
+Zero-inflated distributions are useful to deal with excess of zeros of a data set that has a known distribution. The density for zero-inflated Poisson variable with pseudo-mean parameter $\lambda$ and inflation parameter $\pi$ is represented as:
+  
+  \[f(x)=
+    \begin{cases}
+      \pi+(1-\pi)e^{-\lambda}& \text{if } x=0\\
+      &\\
+      (1-\pi)\left(\frac{\lambda e^{-\lambda}}{x!}\right)&  \text{if } x>0. 
+    \end{cases}
+  \]
+\noindent Notice that the parameter $\pi$ quantifies the excess of zeros assuming that the data is Poisson distributed. For RTs, the pseudo-mean $\lambda=\boldsymbol{\theta}\cdot \mathbf{a}$, ZIP has the following joint distribution:
+  
+\begin{equation}
+\label{ZIP_den}
+f_{(\pi,\boldsymbol{\theta})}(n_1,\ldots,n_J)=\left(\prod_{n_j=0}\pi+(1-\pi)e^{-\boldsymbol{\theta}\cdot\mathbf{a}_j}\right)\cdot\left(\prod_{n_j>0}(1-\pi)\left(\frac{\boldsymbol{\theta}\cdot\mathbf{a}_j\,e^{-\boldsymbol{\theta}\cdot\mathbf{a}_j}}{n_j!}\right)\right),
+\end{equation}
+
+\subsubsection{NB}
+\label{nb}
+It is well known and documented that overdispersed count data can be properly fitted using a negative binomial model \cite{anders2010differential}. For our current application, RTs $\{n_j\}$ from the same category would be assumed to be negative binomially distributed. Many parametrizations have been proposed for negative binomial random variables; here we use a pdf that includes a dispersion parameter: 
+% \[n_j\sim\mathcal{NB}(\mu_j,r) \text{ where,}\]
+\[P_{\mu_j,r}[n_j=n]=\left(\frac{r}{r+\mu_j}\right)^r\cdot \left(\frac{\Gamma(r+n)}{n!\,\Gamma(r)}\right)\cdot \left(\frac{\mu_j}{r+\mu_j}\right)^{n},\]
+\noindent where $\mu_j$ is the mean parameter for RT $j$ and $r$ is an overall dispersion or shape parameter. $\Gamma$ is the gamma function. This model has the following properties:
+\begin{equation} 
+    \begin{split} 
+      E[n_j]&=\mu_j \text{ and }\\
+      Var[n_j]&=\mu_j+\frac{\mu_j^2}{r}.
+\label{NB_moms}
+    \end{split}
+\end{equation}  
+
+NB can be seen to extend P noticing that a negative binomial variable with mean $\lambda$ converges to a Poisson random variable with parameter $\lambda$ as the dispersion parameter $r$ tends to infinity.
+The density of the joint distribution of RTs for this model is:
+  
+\begin{equation}
+\label{NB_den}
+f_{(r,\boldsymbol{\theta})}(n_1,\ldots,n_J)= \prod_{j=1}^J  \left(\frac{r}{r+\boldsymbol{\theta}\cdot\mathbf{a}_j}\right)^r\cdot \left(\frac{\Gamma(r+n_j)}{n_j!\,\Gamma(r)}\right)\cdot \left(\frac{\boldsymbol{\theta}\cdot\mathbf{a}_j}{r+\boldsymbol{\theta}\cdot\mathbf{a}_j}\right)^{n_j},
+\end{equation}
+\noindent by setting $\mu_j=\boldsymbol{\theta}\cdot \mathbf{a}_j$.
+  
+\subsection{ZINB}
+\label{zinb}
+
+Based on our observations and modeling premises, we want to account for RTs with zero counts and also for overdispersion in the data. For this purpose we use the following parametrization of the Zero Inflated Negative Binomial distribution:
+
+  \[P_{\mu_j, r}(n_j=n)=
+    \begin{cases}
+      \pi+(1-\pi)\left(\dfrac{r}{r+\mu_j}\right)^r& \text{if } n=0\\
+      &\\
+      (1-\pi)\cdot\left(\dfrac{r}{r+\mu_j}\right)^r \cdot \left(\dfrac{\Gamma(r+n)}{n!\Gamma(r)}\right) \cdot \left(\dfrac{\mu_j}{r+\mu_j}\right)^n &  \text{if } n>0
+    \end{cases}
+  \]
+
+\noindent where $\mu_j$ is the mean parameter for RT $j$ and $r$ is a dispersion parameter. $\pi$ is an inflation parameter that accounts and estimates the proportion for extra zero-count RTs. These parameters express the model's properties:  
+
+\begin{equation} 
+    \begin{split} 
+      E[n_j]&=(1-\pi)\cdot \mu_j \text{ and }\\
+      Var[n_j]&=(1-\pi)^2\cdot\left(\mu_j+\frac{\mu_j^2}{r}\right) .
+\label{ZINB_moms}
+    \end{split}
+\end{equation} 
+
+The density of the joint distribution of RTs for this model is:
+
+\begin{multline}
+\label{ZINB_den}
+f_{(\pi, r,\boldsymbol{\theta})}(n_1,\ldots,n_J)= \prod_{n_j=0} \pi + (1-\pi) \left( \dfrac{r}{r+\boldsymbol{\theta}\cdot\mathbf{a}_j} \right)  \times \\
+ \prod_{n_j>0} \left(1-\pi \right) \cdot \left(\frac{r}{r+\boldsymbol{\theta}\cdot\mathbf{a}_j}\right)^r\cdot \left(\frac{\Gamma(r+n_j)}{n_j!\,\Gamma(r)}\right)\cdot \left(\frac{\boldsymbol{\theta}\cdot\mathbf{a}_j}{r+\boldsymbol{\theta}\cdot\mathbf{a}_j}\right)^{n_j},
+\end{multiline}
+\noindent by setting $\mu_j=\boldsymbol{\theta}\cdot \mathbf{a}_j$.
+
+\subsection{Parameter Estimation}
+Maximum likelihood estimation (MLE) is a common method in parameter estimation. In the models specified in (\ref{P_den}), (\ref{ZIP_den}),  (\ref{NB_den}), (\ref{ZINB_den}) we employ MLE to estimate \textbf{abundance index} by solving:
+
+\begin{equation} 
+(\widehat{\boldsymbol{\theta}},\widehat{\delta})_\text{MLE}=\argmax_{\boldsymbol{\theta},\delta}\mathcal{L}(\boldsymbol{\theta},\delta|\mathbf{n})=\argmax_{\boldsymbol{\theta},\delta}\log{f(\boldsymbol{\theta},\delta|\mathbf{n})},
+\end{equation}
+
+\noindent where $\mathcal{L}(\boldsymbol{\theta},\delta | \mathbf{n})$ is the log-likelihood function of parameters $\boldsymbol{\theta}$ and $\delta$ given RT counts $\mathbf{n}$;  $\delta=\pi$ for ZIP, $\delta=r$ for NB and $\delta=(\pi, r)$ for ZINB. P doesn't have extra parameter. The parameters are also subject to the following constraints:
+
+\begin{align*}
+  \text{}& \boldsymbol{\theta}\cdot\mathbf{l}=1 \text{, }
+  \theta_{i} \geq 0 \text{ for } i=1,\ldots, I \\
+  &\text{ and}\\
+  & 0<\delta<1 \text{ for ZIP, }\\
+  & 0<\delta \text{ for NB or}\\
+  & \delta\in[0,1]\times(0, \infty] \text{ for ZINB.}
+\end{align*}
+
+\noindent For the first constraint, $100\times\boldsymbol{\theta}\cdot\mathbf{l}$ is the percentage abundance for the gene transcripts. \\
+ 
+Due to Poisson random variable's additive property, $\mathcal{P}(\lambda_1)+\mathcal{P}(\lambda_2)\sim\mathcal{P}(\lambda_1+\lambda_2)$, it can be shown \cite{jiang2009statistical} that the likelihood function is convex by using the read category simplification, so the constrained MLE for P can be obtained easily. In the other hand, the proposed methods, including zero-inflation and overdispersion parameters adds extra complexity to the models, thus no simple approach is available to obtain a constrained MLE in them. For this case numerical optimization was employed. 
+%Also \cite{jiang2009statistical} model has a convenient and intuitive sufficient statistic. Now, for the proposed models, the inclusion of zero-inflation and overdispersion parameters add extra complexity to the models' likelihoods and thus no simple statistics can be obtained and the constrained MLE in those models; numerical optimization has to be employed. 
+% Regarding variance estimation of these paramaters, bootstrap method are available.
+
+\section{Datasets}
+\subsection{MAQC data set}
+To assess the performance of the P, ZIP, NB and ZINB under a realistic setting, dataset from the MicroArray Quality Control (MAQC) Project  \cite{shi2006microarray} is used. This dataset contains RNA sequencing data of two human samples, one from Universal Human Reference (UHR) and another from Human Brain Tissue (HBT). The data are single-end 35bp sequences generated by Ilumina GenomeAnalyzer using seven lanes. MAQC project also obtained expression levels of $894$ transcripts using quantitative real time chain reaction (qRT-PCR) technology. qRT-PCR result serves as an orthogonal experimental measurement of transcript abundance and is known to be a highly reliable. This gold-standard values quantify proportionally FPKM abundance at an isoform level. \\
+ 
+The sequence data are downloaded from NCBI Read Archive with accession number SRA010153 and qRT-PCR data are downloaded from GEO with accession GSE5350. Fastq files were created by merging sequence reads from seven lanes.  The reads are mapped to human reference genome (hg19) and UCSC (refGene) transcription annotation database. $244$ out of $894$ qRT-PCR quantification results are used to evaluate the performance of the four models as they are at isoform level. This relatively low number can be explained mainly because of low sequencing coverage, the presence of repeated isoforms and single-isoform genes ($563$) present in the qRT-PCR experiment. Genes with a single isoform are trivial for the problem we are addressing. \\
+
+\subsection{Simulation}
+\label{simulation}
+The MAQC dataset only has a small portion of qRT-PCR quantification results are at isoform level and it lacks complete quantification of all isoforms within a gene. To systematically study the performance of the three models discussed in this paper, we use simulated data with known transcripts abundance. Here FluxSimulator (version 1.2) \cite{griebel2012modelling} was used to generate pre-assigned RNA-Seq reads with random transcript abundances. Typical biases including fragmentation, library preparation and sequencing were introduced with default parameters. Reference annotation (GTF format) using all RefSeq genes (hg 19, NCBI build 37) was used. $100$ million (M) $75$bp single-end reads were generated initially. Three additional simulations were run using same parameters, but changing output reads to: $10$M, $20$M and $60$M; these samples are use to examine the performance of the methods under different sequencing coverages. A BED format file was generated based on the input gene annotation containing chromosome position, junction information and transcript location for each read. Reads coming from single-transcripts genes are removed for further downstream analyses. FluxSimulator also reports the actual frequency of reads that come from the gene-transcripts based on the GTF file used as reference for every RNASeq simulation. Knowledge of these quantities establishes ground-truth values and can help to quantify relative transcript abundance in the context of particular genes.\\
+
+\section{Results}
+\label{results}
+
+Three different metrics were used to evaluate and compare the methods' performance. The first two metrics are used to examine results obtained from MAQC dataset. Direct application of the coefficient of determination ($r^2$) is used to quantify the linear fit between ground-truth and estimated values. Likewise, Spearman correlation is used to examine monotonic trend between two variables.  \\ 
+
+%To evaluate the performance of the models, the simulated data is analyzed using R scripts implementing those models. 
+
+The simulated data provides completely detailed information regarding ground-truth values that can enable the evaluation of the methods' performance at a gene level. The root mean squared error (RMSE) metric, 
+\[\text{RMSE}(\widehat{\boldsymbol{\theta}},\boldsymbol{\theta})= \sqrt{\frac{\sum_{i=1}^{I}(\widehat\theta_i-\theta_i)^2\cdot \hat{l}_i^2}{I}},\] is used to quantify precision of transcript relative abundance estimates and true values within a gene. This metric calculates the mean abundance proportion error of the parameter estimates with respect to the true abundance proportion. Notice that the metrics used in MAQC dataset can also used to perform this same type of analysis. \\
+
+\subsection{Model Performance}
+
+Figure \ref{real} shows panels for each method depicting the a positive linear trend of the log(RPKM) against log(qRT-PCR). Spearman correlation was used to compare the estimates against qRT-PCR abundance. P, ZIP and ZINB have the best performance with Spearman correlation of $0.7$. ZINB performs best among these methods using $r^2$ metric. 
+
+\label{real}
+\begin{figure}[H]
+  \centering
+% \includegraphics[scale=0.4]{comp_three.pdf}  
+  \includegraphics[scale=0.5]{four_meth_G2_gg.pdf} 
+  \caption{Transcript-wise level comparison. Scatter plots comparing abundance estimation of the methods against qRT-PCR \textit{gold standard} measure. Spearman correlation and $R^2$ are used to compare the performance of the methods. }
+   \label{pars}http://www.ncbi.nlm.nih.gov/refseq/
+\end{figure}
+
+Looking at the simulated data, the alternative models (ZIP and NB) perform better than P in $76\%$ cases (Figure \ref{pars}a).  $40\%$ of the genes show best performance under ZIP.  For those genes the mean of the zero-inflation parameter $\pi$ is $0.59$. The distribution of $\pi$ is in Figure \ref{pars}c.  Also, we have $36\%$ of the  genes with best performance under NB.  The mean over-dispersion parameter of those genes is $0.14$, and the distribution of $r$ is in figure \ref{pars}d.  From the results, excessive zero counts and over-dispersion have been observed and using the models proposed here do improve estimates from those obtained from P.
+
+\begin{figure}[H]
+  \centering
+%\includepdf{}
+%\includegraphics[scale=0.3]{many_1.png} 
+%\includegraphics[scale=0.5]{many_1.pdf} 
+%\includegraphics[scale=0.6,viewport=0 0 800 770,clip]{many1.pdf}
+\includegraphics[scale=0.4]{pie_r2_100M.png}\\
+\includegraphics[scale=0.3]{run100M_dplot_rms.png}
+\includegraphics[scale=0.3]{run60M_dplot_rms.png}
+\includegraphics[scale=0.3]{run20M_dplot_rms.png}
+\includegraphics[scale=0.3]{run10M_dplot_rms.png}
+
+  \caption{Overall performance. \textbf{Top}) Proportion of best gene-wise performance of all models. \textbf{bottom}) Models' performance. }
+%\textbf{c}) Distribution of the Zero-inflation parameter $\pi$ in ZIP. \textbf{d}) Distribution of the dispersion parameter $r$ in NB.}
+   \label{zi_disp_pars}
+\end{figure}
+
+\section{Factors Affecting Quantification Performance}
+There are a set of genes that perform well or poor under all models, there are may be intrinsic factors, from either transcription structures of a gene or RNA-Seq experiments, which affect the performance of isoform quantification.  Using the simulated data, we studied the effect of three factors under the models discussed here: similarity among transcripts of a gene, number of transcripts per gene and coverage of RNA-Seq experiments.
+
+\subsubsection{Transcript Disjointness}
+
+Similarity or dissimilarity may play a role in isoform quantification as for genes with highly similar isoforms we may not have enough information to accurately estimate the abundance.  Here we employ transcripts' disjointness as the measure of isoform dissimilarity, which is defined as:
+
+\begin{equation}
+\text{DIS}_g=\sum_{1\leq p < q\leq I_g}a_{pq}
+\end{equation}
+
+The definition is essentially a sum of pair-wise differences similar to the score of multiple sequence alignments. From the simulated data in Figure \ref{DIS}, we can observe the RMSE does not decrease with the increase of disjointness score, but the variance does decrease in all models. The MLE for $\boldsymbol{\theta}$ is unbiased for all models, so we would expect no accuracy increase or RMSE decrease for the abundance estimate. But with the decrease of worst RMSE, for genes with high dissimilarity score we obtain more reliable results. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{f_DIS_RMS.pdf} 
+  \caption{Disjointness score and model performance.}
+   \label{DIS}
+\end{figure}
+
+\subsubsection{Number of Transcripts per Gene}http://www.ncbi.nlm.nih.gov/refseq/
+The exact effect of transcripts' number is unclear as the estimator itself is unbiased regardless of the number of isoforms.  But with the increase of transcript number, we would expect decreasing data points for each read category but increasing transcripts disjointness score for genes of similar length. Using the simulated data, we observe no change of RMSE but significant decreasing of variance for all three models as shown in Figure \ref{N_TR}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{f_N_TR_RMS.pdf} 
+  \caption{Performance per number of gene transcripts.}
+   \label{N_TR}
+\end{figure}
+
+\subsubsection{Coverage}
+Gene and transcript coverage has been considered a very important factor in transcriptome quantification and is directly related to the cost of RNA-Seq experiments. The expected average coverage of a gene $g$ with length $L$ for a sequencing run with $N$ mapped reads of length $l$ is $\frac{Nl}{L}$. The length $L$ of a gene $g$ with multiple isoforms is the length of the set union of the transcripts.\\
+
+For RNA-Seq experiments, due to expression level differences among genes, the average coverage for each gene differs greatly as showed in Figure \ref{cov_g}a for our simulated data.  To study the effect of coverage, genes are put into different bins such that genes in each bin have similar average coverage.  Then we represent the boxplot of RMSE for each bin under all three models.  We observed the increase of accuracy in terms of both mean value and the variance when the average coverage increases from $0.6\times$ to $6\times$.  When a moderate coverage of $6\times$ is reached, no reduction of either mean or variance was observed.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.6]{many_2.pdf} 
+  \caption{\textbf{a}) Gene-wise coverage distribution for the simulated data. \textbf{b}) Zero-inflation and gene-wise coverage. \textbf{c}) Dispersion and gene-wise coverage. \textbf{d}) Isoform quantification. Performance under different average coverages.}
+  \label{cov_g}
+\end{figure}
+
+Our proposed models account for zero-inflation and over-dispersion, which are related to coverage. So we study the relationship between the gene coverage and those parameters. Figure \ref{cov_g}b describes the decrease of the ZI parameter as the gene-wise coverage grows larger, verifying the assumption that when less reads map to a gene, it's more likely to increase its amount of $0$-RT frequency. This parameter seems to be uniform for coverages smaller than $50\times$. Figure \ref{cov_g}c indicates a positive trend between NB's dispersion parameter and gene-wise coverage. This means that under low gene-wise coverage, RTs' frequency variability increases. This variability would be similar to the mean parameter as the gene-wise coverage increases. In this case the distribution would converge to a Poisson random variable.
+
+\subsection{Examples}
+
+We wanted to explore the precision of the estimates under different isoform abundance settings.  To do this we listed $40$ genes that had overall top performance and $20$ genes that had performance for the three methods. These two groups would would be labeled as top and bottom. $57$ replications of the simulation experiment were carried out with these genes modifying transcript abundances on each run and then estimating transcript abundances with the addressed methods. A coverage of $40\times$ was held constant throught all replications.\\
+
+Figure \ref{refl_summ}a summarizes the mean and RMSE variation for the top and bottom genes on P, ZIP and NB.  As expected, the genes that were in the top $20$ group have a consistently good performance (mean RMSE below $0.15$ in average). We also notice small variation for the top group. Most of the times ZIP and NB outperform P in the top group. This trend is not always the case with the bottom group where we expected larger RMSE average values, but also noticed larger variation within and between the methods. Some of the genes in the bottom group actually had good performance; this probably would be due to random irregular reads' spread on the initial experiment run. Variation and mean performance seem to be related positively. We also notice that genes with good performance are more likely to have long and unique pairwise transcripts (Figure \ref{refl_summ}b) contrary to what happens with genes with transcripts with big overlapped intervals and/or small unique fragments (Figure \ref{refl_summ}c). 
+\begin{figure}[H]\
+\includegraphics[scale=0.6]{many_3.pdf}
+%\includegraphics[scale=0.6,viewport=0 0 750 750,clip]{many3.pdf}
+\centering
+\caption{\textbf{a}) Mean Replication performance. \textbf{b}) and \textbf{c}) replication distribution of some genes; the bottom diagram depicts transcript structure. \textbf{b}) Example of a gene with excellent overall performance in all three methods. \textbf{c}) Example of a gene with poor performance in all three methods. }
+\label{refl_summ}
+\end{figure}
+
+\section{Discussion}
+\label{discussion}
+RNA-Seq technology makes it possible to quantify the whole transcriptome in isoform level.  Parametric models such as Poisson model are proposed to infer transcript abundance for a given gene.  Due to the expression level difference, we would expect to observe excessive zeroes in under-represented genes of low coverage and over-dispersion in many cases.  We proposed two models (ZIP and NB) to accommodate those two factors.  By using simulated data, we have shown that zero inflation and over-dispersion indeed are common in RNA-Seq experiments and the proposed methods perform better in many of the sampled genes.  The results show that it could be beneficial in isoform quantification by selecting alternative models for data with obvious violation of assumptions or features not accounted in the model.  Tests for identifying such violation or features could be carried out before model selection. Even though we only demonstrate the extension of Poission distribution into NB or ZIP distribution in isoform quantification, the idea is easily adapted into other applications. \\
+
+Using simulation, we also studied the effects of transcripts similarity, number of isoform per gene, and average coverage on abundance estimate.  For the first two factors, no RMSE reduction is observed as the estimator is unbiased, but variance of the RMSE has been reduced with extra data points. This observation could be modeled and utilized in differential analysis of isoforms between biological samples to improve power and false positive rate. When average coverage is studied, we see improved accuracy of isoform abundance at higher coverage level.  The effect disappears when a moderate coverage for genes is obtained. This result suggests, for isoform quantification purpose, average coverage above $6\times$ will be sufficient. Using this information, pre-experimental estimates could be considered along  with other coverage requirements based on analysis carried on the data.\\
+
+In this paper, we only considered simple ZIP and NB models assuming all RTs share a global zero-inflation or over dispersion parameter.  More complicated models that consider different values of such parameters could be considered.  Also some inherited feature of the RNA-Seq experiments such as GC-bias and mappability could also been parameterized to generate more sophisticated models. Currently, simulated RNA-Seq data are broadly used in isoform quantification methods or models development, which pose an obvious problem as the simulated data may not capture all the features of real world experiment well.  Experimental validated quantification datasets, or gold standard datasets, are invaluable resource for both development and evaluation of this problem and other related problems.
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+\end{document}
+
