@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 read rMATS article
 test Gviz
 
 Learn more github
 try new on-demand token
 Do Laundry
+=======
+Compare RPKM with FPKM
+Finish Gelman project.
+>>>>>>> 54495631a941427cdfe24fdbd87f496273a66ee5
