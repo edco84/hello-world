@@ -1,0 +1,3543 @@
+Day Book
+
+* <2013-08-19 Mon>--<2013-08-23 Fri>
+
+** Monday <2013-08-19 Mon>
+
+*** Set a date for Isoform meeting
+*** Review the original articles (Salzman and Jiang)
+*** Check the output results
+
+** Tuesday <2014-08-19 Tue>
+
+*** DONE Get PER working
+*** DONE Recheck zero's matrix
+
+*** DONE Review Song's corrections
+**** Hunt trend in low convergence in NB_c
+**** Quantify convergence by transcript number
+*** DONE Make data sets of problematic fits
+*** DONE Review Jiang's Article
+*** DONE Read qRNASeq Manual
+Plot reads and their depths
+
+
+** Wednesday  <2013-08-21 Wed>
+
+*** DONE Get snow to work
+*** TODO Recheck Salzman's Article
+
+** Thursday  <2013-08-22 Thu> 
+
+*** DONE Read about mle function and related packages
+optim function and constrOptim function are useful for this purpose
+
+*** DONE Derivative of the likehood function
+
+*** DONE Taking symbolic derivatives of expressions
+
+*** DONE Program the model
+
+*** TODO MLE calculation for 1 gene
+*** TODO MLE constrained for 1 gene
+*** TODO Run for 1000 genes
+
+** Friday  <2013-08-23 Fri> 
+
+*** DONE Program and test the model
+
+*** DONE MLE calculation for 1 gene
+Not very successful; BFGS method is terribly slow (5 mins);
+I'll only try to do constrained setting: sum of the parameters is 1
+and each is positive. 
+
+Results are far from satisfactory. This would suggest to recheck the
+likelihood function and the gradient.
+
+*** DONE MLE constrained for 1 gene
+
+
+* <2013-08-26 Mon>--<2013-08-30 Fri>
+
+** Monday <2013-08-26 Mon>
+*** DONE Check results from weekend
+We need to select better starting values for BGFS and CG. 
+The process doesn't seem to go past those values.
+
+NM method is the only one that seems to be actually doing something.
+
+*** DONE How's the true abundance calculated?
+Make a table from the reads file identifying all possible transcripts.
+
+*** DONE Read Salzmann and Jiang 1
+
+*** Finish writing pdf of MLE Poisson
+    CLOCK: [2013-08-26 Mon 16:00]--[2013-08-26 Mon 17:00] =>  1:00
+
+** Tuesday <2013-08-27 Tue>
+
+*** DONE Orientation  
+    CLOCK: [2013-08-27 Tue 08:30]--[2013-08-27 Tue 10:30] =>  2:00
+*** DONE 
+*** DONE Point Mutations Assignment
+    CLOCK: [2013-08-27 Tue 11:00]--[2013-08-27 Tue 16:46] =>  5:46
+    
+*** DONE Install VPN access
+    CLOCK: [2013-08-27 Tue 19:00]--[2013-08-27 Tue 20:00] =>  1:00
+
+** Wednesday <2013-08-28 Wed>
+*** DONE Pdf of MLE Poisson
+    CLOCK: [2013-08-26 Mon 16:00]--[2013-08-26 Mon 17:00] =>  1:00
+
+    CLOCK: [2013-08-27 Tue 16:46]--[2013-08-27 Tue 17:00] =>  0:14
+
+** Thursday <2013-08-29 Thu>
+*** DONE Finished pdf of MLE Poisson
+
+*** DONE Run error-proof procedure for first 100 genes
+Too slow and more than half of the genes don't converge! Only got to 77 genes.
+*** DONE glm procedure for ztpoisson and ztnegative binomial
+
+** Friday <2013-08-30 Fri> 
+
+*** DONE Store raw data
+*** DONE Inspect package VGAM 
+*** DONE Run over a couple of genes glm procedure for ztpoisson and ztnegative binomial
+*** DONE Run error-proof procedure for first 100 genes
+Too slow and more than half of the genes don't converge!
+
+
+* <2013-09-03 Tue>--<2013-09-06 Fri>
+** Tuesday <2013-09-03 Tue> 
+*** DONE Finish storing raw data
+*** DONE Check Salzmann's GLM specification
+Reviewed the article to make sure the implementation is doing what it's suppose to be doing
+
+*** DONE Try run some genes with ztp and ztnb regression.
+Fitting the model returns estimates in scale. The values are close 0, so
+when they are transformed the value is close to 1. 
+There should be a way to use these coefficients. Know how to transform the coefficients
+leaves us half-way, because we need to enforce the constraint.
+
+*** TODO Check Trivedi's text
+Trivedi's text gives a complete and broad account of count models and their interpretation.
+The goal would be to read from chapter 1 to 3 of this textbook.
+
+
+*** Practice table
+
+| Name             | Label   | Cals |
+|------------------+---------+------|
+| Chicken Parm.    | MC      |  140 |
+| Sesame Chicken   | LC      |  220 |
+| Baked Pork       | ME      |  230 |
+|------------------+---------+------|
+| Chili            | Wendy's |  300 |
+| Jr. Cheese Burg. | Wendy's |  400 |
+| Meat             | Wegmans |  250 |
+| Rice             | Goya    |  330 |
+| Salad            | Wegmans |   22 |
+|                  |         | 1892 |
+
+
+| qwer | as |   | asf  | df |   |
+|      |    |   |      |    |   |
+| r q  | e  |   | ff   |  3 | 3 |
+|      |    |   |      |    |   |
+| w    | 3  |   | eadf |  3 |   |
+|      |    |   |      |    |   |
+
+
+
+
+
+
+
+** Wednesday  <2013-09-04 Wed>
+*** TODO Finish the running 1000 Genes
+script:
+/home/ecortes/Projects/Isoform/August/MLE_scripts/Run_1000_MLE3.R
+*** Summarize Results
+
+*** DONE Correct Document
+
+*** Investigate about Zero-Inflated Poisson and Negative Binomial
+Look for bibliography that used this kind of models.
+
+*** DONE Derivation of MLE estimators for Zero-Inflated Poisson
+
+*** DONE Find Hessian Matrix to check convexity
+
+** Thursday <2013-09-05 Thu>
+
+*** DONE Test of Derivative Program for univariate cases
+*** DONE Check for Convex Optimization Packages in R
+http://www.econ.uiuc.edu/~roger/research/conopt/coptr.pdf 
+
+** Friday  <2013-09-06 Fri>
+
+*** DONE Make symbolic derivative program
+1. The program calculated derivatives of univariate and also multivariate functions.
+2. The log-likelihood is specified
+3. The derivative of the log-likelihood is found
+4. Only numeric values are obtained
+5. The program is conditional on the formula of the log-likelihood (it can't be fully automated)
+6. Parallelisation would be highly recommended
+*** DONE Make derivatives program work for ZT-Poisson 
+*** DONE Derivatives program for MLE estimation of Negative Binomial
+
+
+** Questions
+Really how many zeros should there be included? For single-end reads, it is 
+just a matter of fill in blanks each transcript and then trim repeated ones.
+
+How to adapt count regression models for our purpose? 
+Can a useful estimate be obtained running these kind of models?
+Can it be done when we impose constraints to coefficients?
+What is the exact purpose of the link function in GLMs?
+
+** Observations
+1. Comparing ZTP with two different initial values it can be noticed that the the optimization function
+is highly dependent on the initial values. Reliability of the estimate can be measured by comparing the
+estimate with the true one through correlation. The most reliable estimate is NM for inversely proportional
+initial value. Even though the estimates are less biased when beginning with fitted value, we would not
+like to rely on it for two reasons. The first one is that the estimate improves slightly when running
+the MLE estimation. Second the fitted estimate sometimes doesn't work and is highly variable.
+
+I'm inclined to only run with NM using the inversely proportional initial value, because of its correlation
+with the true value. This avoids depending on the fitted value.
+
+
+* <2013-09-09 Mon>--<2013-09-13 Fri>
+
+** Monday <2013-09-09 Mon> 
+*** DONE Organize and clean Isoform Files for running
+*** DONE Initial value of the dispersion parameter for ZTNB
+*** DONE Run a couple of genes with ZTNB
+*** DONE Improve ZTP and Rerun
+*** DONE Retrieve zero generation procedure
+Needs to be tested
+
+*** DONE Derivation of MLE estimators for Zero-Inflated Negative Binomial
+
+
+** Tuesday <2013-09-03 Tue> 
+*** DONE Finish storing raw data
+*** DONE Check Salzmann's GLM specification
+Reviewed the article to make sure the implementation is doing what it's suppose to be doing
+
+*** DONE Try run some genes with ztp and ztnb regression.
+Fitting the model returns estimates in scale. The values are close 0, so
+when they are transformed the value is close to 1. 
+There should be a way to use these coefficients. Know how to transform the coefficients
+leaves us half-way, because we need to enforce the constraint.
+      
+** Wednesday  <2013-09-04 Wed>
+*** DONE Latex Document or Presentation for Wednesday <2013-09-11 Wed> 
+*** DONE Hessian Matrix of ZINB 
+*** DONE Hessian Matrix of ZTP
+
+The hessian matrix of ZTNB is terrible, because the gradient is really complicated.
+*** DONE Meeting @ 2   
+
+
+*** DONE Check rseq package
+*** DONE Read documentation rSeq package
+*** DONE Install rSeq package
+*** DONE Look for negative binomial article in Pachter
+The only negative binomial articles mentioned are the ones for testing
+differential gene expression for edgeR and DESeq.
+
+
+** Thursday <2013-09-05 Thu>
+*** DONE Review Salzman Article
+*** DONE Study code from rSeq
+*** DONE Download refMrna and annotation of the mouse genome
+This is to prepare data in order to run rSeq
+*** DONE Investigate how to prove positive definiteness
+Try to look at the matrix's eigenvalues to be positive.
+
+It is a necessary condition to find the minimum of f to solve grad(f)=0. This is not
+enough, because we can run into a saddle point. In this case if the hessian matrix
+is definite positive, convexity of the function is ensured.
+
+eed to obtain the fasta reference file, fastq file and probably file specifying
+gene names and transcript names.
+Wait for Qiang to prepare the data. The program process input from mRNA data directly,
+instead of DNA as it was previously done. The data needs to be transformed in terms
+of the mRNA.
+Look into the functions in the mean time.
+This seems to be something I don't really know how to approach
+
+
+** Friday  <2013-09-13 Fri>
+*** DONE Write e-mail to developer of rSeq
+Ask about initial value
+*** DONE Get rSeq to work
+** Questions
+Really how many zeros should there be included? For single-end reads, it is 
+just a matter of fill in blanks each transcript and then trim repeated ones.
+
+How to adapt count regression models for our purpose? 
+Can a useful estimate be obtained running these kind of models?
+Can it be done when we impose constraints to coefficients?
+What is the exact purpose of the link function in GLMs?
+
+** Observations
+Running NBZT
+
+1. I hope to run and present results for zero-truncated distributions and some 
+observations regarding zero-inflated model. Running NBZT takes a long time!
+Running PZT take less. If we include zeros to the input matrix, things are going
+to be very slow for finding the MLE.
+
+2. Two convergent fit genes
+
+2.1 Gene 111, which has 3 transcripts and converges for constrained Poisson 
+model runs with the MLE method, even using inverse-proportional initial values.
+The output looks really promising because its actually using the gradient function.
+It works better for BFGS, then NM and finally CG.Bad thing it takes almost 10 mins
+to run the three methods.
+
+2.2 Gene 101, which has 4 transcripts obviously would take a lot of time.
+The best performance was for BFGS with both initial values,
+but is the one that takes longer. The RMS for these (initial fitted and default) 
+is 0.01 and 0.03, with respective times 4 and 22 mins.
+One interesting fact is that CG finding the best
+maximums is the one that performs worst.
+
+2.3 Gene 1, which has 4 transcripts takes a loooot of time. When the fitted value 
+is used the best performance goes for NM (0.23 RMS, 48 min) versus NM non-fitted
+(0.24 RMS, 12 min). The non-fitted estimates are better than the fitted ones, but
+that is because the initial parameters were not touched; correlations are better
+for the fitted values.
+
+Directions: Try to run only with with NM and BFGS. It seems that using fitted
+would save a great deal of time if available. This method has the best performance 
+I have ever seen! This are nice genes though. It is important to keep track of 
+estimates and correlation, which gives a us a sense of coherence with the obtained 
+transcript abundances.
+
+3. Three non-convergent fit genes
+
+4. These three files have important information and functions that could be
+reused:
+
+~/Projects/Isoform/August/Run_1000.R
+~/Projects/Isoform/August/Run_1000_funs.R
+~/Projects/Isoform/August/Summary.R
+#########################################################################
+#########################################################################
+
+How's unmapped read-types handled in Salzman & Jiang?
+ 
+
+
+*** Practice table
+
+| Name             | Label   | Cals |
+|------------------+---------+------|
+| Chicken Parm.    | MC      |  140 |
+| Sesame Chicken   | LC      |  220 |
+| Baked Pork       | ME      |  230 |
+|------------------+---------+------|
+| Chili            | Wendy's |  300 |
+| Jr. Cheese Burg. | Wendy's |  400 |
+| Meat             | Wegmans |  250 |
+| Rice             | Goya    |  330 |
+| Salad            | Wegmans |   22 |
+|                  |         | 1892 |
+
+
+| qwer | as |   | asf  | df |   |
+|      |    |   |      |    |   |
+| r q  | e  |   | ff   |  3 | 3 |
+|      |    |   |      |    |   |
+| w    | 3  |   | eadf |  3 |   |
+|      |    |   |      |    |   |
+
+
+
+
+
+
+<2013-09-16 Mon>--<2013-09-20 Fri>
+
+
+* <2013-09-16 Mon>--<2013-09-20 Fri>
+** Monday <2013-09-16 Mon>
+*** DONE Run ZTP model for single-end reads
+Currently running from 1 to 100
+*** DONE Run ZTNB model for single-end reads
+Currently running
+*** DONE Implement transformation function
+- Relative Abundance
+- RPKM
+- Abundance Index
+Enter any of these and out any these quantities
+
+** Tuesday <2013-09-17 Tue>
+
+*** DONE Summarize results from ZTNB
+*** DONE Dissimilarity Data
+
+** Wednesday <2013-09-18 Wed>
+*** DONE Prepare meeting
+*** DONE Meeting @ 11
+*** DONE Implement Salzman's estimation method using categories
+
+** Thursday <2013-09-19 Thu>
+*** DONE Modify places where to implement snow in ZT and ZI models    
+*** DONE Rerun rSeq
+Script:
+/home/ecortes/Projects/Isoform/September/bed2fq2.R
+
+Output found in: 
+/home/ecortes/Projects/Isoform/September/output_rSeq2 
+
+Notice that this output also holds an alignment file for each gene
+
+** Friday <2013-09-20 Fri>
+*** DONE Some of the datasets have different dimensions in true abundance and transcript length!!!
+*** DONE Summarize rSeq output
+*** DONE Run ZTP on parallel
+
+<2013-09-23 Mon>--<2013-09-27 Fri>
+
+
+* <2013-09-23 Mon>--<2013-09-27 Fri>
+
+** Monday <2013-09-23 Mon>
+
+*** DONE Summarize ZTP 
+*** DONE Summarize rSeq results
+*** DONE Store Summary of all the results
+The summary would be stored in a file with the name:
+All_summ.RData
+
+The object stored would be of the form
+All_summ_[the method employed]. These files are sufficient to create summary plots.
+Possible options:
+(998 Genes Available)
+- All_summ_rSeq: All genes worked; don't know the time
+- All_summ_P: All genes worked; took 4.8 days to run
+- All_summ_ZTP: 54 still running [List not avail] and 27 output error [list available: bad]; 
+  took 0.24 mins to run
+- All_summ_ZTNB: 6 don't run [list available: bad_ini], 
+  30 have infinite value [list available: bad_inf] 
+  and 40 generate output errors [ist available: bad_out]; took 5.78 hours to run
+
+*** DONE Compare results of rSeq with other modeling attempts
+Output can be found in:
+/home/ecortes/Projects/Isoform/Output_summ/ser/Comparisons.pdf
+
+*** DONE Summarize results from rSeq and map Transcript names ???
+
+<2013-09-30 Mon>--<2013-10-04 Fri>
+
+** Tuesday <2013-09-24 Tue>
+
+*** DONE RData file created with method's info
+/home/ecortes/Projects/Isoform/Output_summ/ser/All_summ.RData
+Name of the Variable: All_summ
+*** DONE Check extra plots
+Plot matching values for each gene, instead of ordering
+
+*** DONE Check Linear Regression with results
+Response: RMS or Cor; Check with different covariates
+
+*** DONE Prepare Wednesday's meeting
+
+** Wednesday <2013-09-25 Wed>
+
+*** DONE Make sure to be up to date in work hours 
+*** DONE ??? Check convexity of ZIP 
+Almost done
+
+*** DONE ??? Check if we can find a minimal sufficient statistic for NB model.
+Need more time to think about it; but certainly the collapsing trick in the Poisson model is not 
+suitable.
+*** DONE Create Data Sets with Zeros
+
+** Thursday <2013-09-26 Thu>
+
+*** DONE Model ZIP in R
+- Check the functions
+- Model the functions with collapsed matrices
+
+*** DONE Model NB in R 
+
+** Friday  <2013-09-27 Fri>
+
+*** DONE Run ZIP
+- Parallel computing would be awesome!
+*** DONE Run ZIP
+*** DONE Prepare summary script for ZIP
+*** DONE Summarize ZIP
+
+*** DONE Prepare paired-end reads data
+Its running, but the genes with multiple mapped reads have to be selected.
+
+
+<2013-09-30 Mon>--<2013-10-04 Fri>
+
+
+
+<2013-09-30 Mon>--<2013-10-04 Fri>
+
+
+* <2013-09-30 Mon>--<2013-10-04 Fri>
+
+** Monday <2013-09-30 Mon>
+
+*** DONE Prepare summary script and summary output for NB
+- Box Plots
+- Ordered Performance and Consistency
+
+*** DONE Comparison Plots
+Don't forget to include plot of initial estimate
+- Comparisons: Box Plots and 
+- Pairwise plots
+- Linear Predictors
+
+*** DONE Subset pair-end reads data
+
+
+** Tuesday <2013-10-01 Tue>
+
+*** DONE Function that shows frequencies of the combinations of categories
+- This is to check Zero Inflation
+
+*** DONE Find out the best methods and extreme values
+- By gene performance each method shows its best and its worst
+- By covariates the extreme values are examined and 
+the best method for those values is found
+*** DONE Multinomial logistic regression analysis
+
+
+** Wednesday <2013-10-02 Wed>
+
+*** DONE Meeting
+*** DONE Look for RNA-Seq Data set
+Checked Mortazavi et al. article
+Check NCBI SRA 001030
+
+** Thursday <2013-10-03 Thu>
+
+*** DONE Selecting subsamples
+*** DONE Model ZINB
+
+** Friday <2013-10-04 Fri>
+
+*** DONE Run ZINB
+It's done, but the tests are not satisfactory.
+Second coming: Not very successful
+Third: Got it right
+
+*** DONE Summary ZINB
+Ready to run; need the process to finish
+
+*** DONE Do check that we are counting zeros correctly
+Everything makes sense
+
+*** DONE Summary ser
+
+
+* <2013-10-07 Mon>--<2013-10-11 Fri>
+
+** Monday <2013-10-07 Mon>
+
+*** DONE Speed up ZT models
+
+*** DONE Coverage Variation (P, ZTP, ZIP)
+**** DONE P
+**** DONE ZIP (Is done: look for ZIP2 in deriv_funcs)
+**** DONE ZTP 
+
+
+
+** Tuesday <2013-10-08 Tue>
+
+*** DONE Coverage Variation (NB)
+**** DONE NB
+Currently Running     
+
+** Wednesday <2013-10-09 Wed>
+*** DONE Debug Coverage Variations Summary
+*** DONE Readjust the length of some true abundances
+
+
+** Thursday <2013-10-10 Thu> 
+
+*** DONE Summarize Coverage Variation
+- Comparisons By Method
+- Comparisons All together
+- Revisit results with the new metric
+
+Found in: "~/Projects/Isoform/Output_summ/CoverageExp/"
+
+Files: SUMMARY
+
+Figures: RMS1.png, RMS2.png
+
+RData: CovVarSumm.RData
+
+
+** Friday <2013-10-11 Fri>
+*** DONE Sample Data set by categories
+**** DONE Poisson
+**** DONE Negative Binomial
+
+*** TODO Outline of the article
+*** TODO Correct bam file for visualization
+*** TODO Review the new article
+
+*** TODO Run P model for paired-end reads 
+- Look it up under
+/home/ecortes/Projects/Isoform/September/scripts/Run1000_p_P.R
+
+- There's something I'm missing; so it can't run yet.
+
+
+* <2013-10-15 Tue>--<2013-10-18 Fri>
+
+** Tuesday <2013-10-15 Tue> 
+
+*** DONE RNA-Seq QC
+**** DONE Download Data
+**** DONE Install RSeQC
+**** DONE Create bam index for the four samples
+
+**** DONE Write a script for each sample
+**** TODO Run the analysis
+***** DONE Sample_BCM21-510 
+    
+***** TODO Sample_NYBB-C6-533
+Missing Duplication
+
+***** TODO Sample_NYBB-A05-524  
+Missing Duplication
+
+***** TODO Sample_NYBB-C16-542
+Missing Duplication
+
+
+** Wednesday <2013-10-16 Wed>
+
+*** DONE Finish QC output results
+**** DONE Merge plots into one
+**** DONE Build excel sheet
+**** DONE Send QC Results
+
+** Thursday <2013-10-17 Thu>
+All the results from Poisson model are stored in:
+~/home/ecortes/Projects/Isoform/Output_summ/CoverageExp/res.RData~
+*** DONE Send Qiang info
+*** DONE Run ZINB for different coverages
+Tested for different sample sizes
+Running on parallel computing
+*** DONE Work on Categories Profile
+
+** Friday <2013-10-18 Fri>
+
+*** TODO Compile Results
+*** TODO Make a plot showing how pi is affected with different coverages
+
+*** 1. Coverage Analysis
+**** DONE Pick Genes with low, int and high coverage and compare methods
+|----------+--------------------+--------------+----------|
+| COVERAGE | GENE               | MAPPED READS | TR. NUM. |
+|----------+--------------------+--------------+----------|
+| low      | ENSMUSG00000085492 |          968 |        3 |
+| interm.  | ENSMUSG00000031600 |         7587 |        3 |
+| high     | ENSMUSG00000057156 |        20019 |        5 |
+|----------+--------------------+--------------+----------|
+
+**** Cat. plots
+
+
+* <2013-10-21 Mon>--<2013-10-25 Fri>
+
+** Monday <2013-10-21 Mon>
+
+*** DONE 2. Plots for 100% data: Poisson, NB, ZIP, ZINB
+**** Expression Level
+**** Gene Level
+**** Dispersion Parameter
+**** Inflation Parameter
+**** Coverage
+**** Similarity
+**** No. of Transcripts
+
+*** DONE 3. Comparisons within same methods
+*** DONE 3.1 Compare ZIP vs. P
+*** DONE 3.2 Compare ZINB vs. NB
+
+*** DONE 4. Check outliers
+Bad cases from the 4 methods
+
+*** DONE Categories Plots for the selected genes.
+
+** Tuesday <2013-10-22 Tue> and Wednesday <2013-10-23 Wed>
+
+*** Prepare document
+**** DONE Coverage Analysis (?)
+***** DONE Look for the 3-tr with highest coverage and do category profile
+***** Should we include 25, 50 and 75 plots?
+ 
+**** DONE Comparisons Section
+For Poisson and Negative Binomial Section:
+***** DONE Set the table
+***** DONE Set the plots and work on captions
+***** DONE Do some comments 
+
+**** DONE Add some conclusions
+
+**** DONE Bibliography
+
+**** DONE Plot true abundance with expression level
+
+**** DONE Plot gene level with mapped reads
+
+** Thursday <2013-10-24 Thu>
+
+*** DONE Script for plots
+**** DONE Similarity
+**** DONE By transcript number
+**** DONE Coverage
+**** DONE Zero-inflation parameter (ZIP) vs. Coverage
+
+**** DONE Best ZIP >> P (low coverage)
+- Category profile and Depth plot
+**** DONE Best NB >> P
+- Category profile and Depth plot
+
+
+*** Paste and Comment Plots
+**** DONE Overall plots
+**** DONE Number of transcripts
+**** DONE Dissimilarity
+
+** Friday <2013-10-25 Fri>
+
+*** DONE Select and paste Plots
+**** DONE Coverage
+**** DONE Comparisons
+
+
+* <2013-10-28 Mon>--<2013-11-01 Fri>
+
+** Monday <2013-10-28 Mon>
+
+*** DONE Comment and correct some of the plots
+
+*** Type theory
+**** DONE Poisson model
+
+** Tuesday <2013-10-29 Tue>
+
+*** DONE Methods
+**** DONE Notation
+**** DONE ZIP model
+**** DONE NB model
+**** DONE Explain model fitting
+**** DONE Model implementation
+
+*** Complete Methods' Comparison
+**** DONE Explain RMS
+
+*** DONE Coverage Analysis
+- Pick a gene where all the methods perform more less the same 
+  and check different coverage percentages
+- Do overall coverage percentages (5% and 10%)
+- Don't forget to pick a gene with a nice depth plot
+**** DONE Run it
+**** DONE Summarize
+**** DONE Paste and comment
+
+** Wednesday <2013-10-30 Wed>
+
+*** DONE Check and correct mapped reads in category plots
+*** DONE Fetch, paste and comment Qiang's recommended gene
+*** DONE Meeting at 3:45pm
+*** TODO Are we really getting maxima on ZIP and NB?
+*** TODO Check VGAM package
+*** TODO Check MITIE article
+
+** Thursday <2013-10-31 Thu>
+
+*** DONE Look for additively outstanding ZIP and NB
+Worried on how to justify the results so far
+*** DONE Coverage Analysis Box Plots
+
+** Friday <2013-11-01 Fri>
+
+*** DONE Ask Qiang to provide details of Experiment
+*** DONE Write introduction
+Read Salzman intro
+Read RNA-Seq book
+
+
+* <2013-11-04 Mon>--<2013-11-08 Fri>
+
+** Monday <2013-11-04 Mon>
+
+*** TODO Redo coverage analysis
+A set is created with the resampling. Sampling was done without replacement.
+We take 1, 5, 10, 25, 50 and 75 % samples from the mapped reads
+
+**** DONE Create the data sets
+**** DONE Correct lengths of trancript length vector and true abundance
+**** DONE Set the scripts to run with different coverages.
+
+** Tuesday <2013-11-05 Tue>
+
+** DONE Redo coverage analysis
+A set is created with the resampling. Sampling was done without replacement.
+We take 1, 5, 10, 25, 50 and 75 % samples from the mapped reads
+
+**** DONE Run for P
+**** DONE Run for ZIP
+**** DONE Run for ZINB
+
+** Wednesday <2013-11-06 Wed>
+
+*** DONE Polish up conclusions
+local vs general fitting: big difference between Poisson and the proposed models
+
+*** DONE Redo and change plots
+*** DONE Meeting
+
+** Thurday <2013-11-07 Thu>
+
+*** DONE Include extra plots
+Problematic samples
+Global ZIP fit for the good fit example
+Explain the method that is good for all the methods
+
+** Friday <2013-11-08 Fri>
+
+*** DONE State of the art of isoform quantification paragraph
+*** DONE Come up with a way to exclude outlying categories
+*** DONE Meeting
+
+
+* <2013-11-12 Tue>--<2013-11-15 Fri>
+
+** Tuesday <2013-11-12 Tue>
+
+*** RNA-Seq Quantification programs
+
+**** [#A] Read
+***** Assessment of transcript reconstruction methods for RNA-Seq
+***** Systematic evaluation of spliced alignment programs
+
+**** [#A] Pipeline document
+***** DONE Table
+
+**** DONE NEUMA
+Installed
+Documentation
+Reference
+
+**** DONE MMSEQ
+Installed
+Documentation
+Reference
+
+**** DONE RSEM
+Installed
+Documentation
+Reference
+
+**** DONE BitSeq
+Installed
+Documentation
+Reference
+
+**** DONE IsoEM
+Documentation
+Reference
+
+**** DONE eXpress
+Documentation
+Reference
+
+
+** Wednesday <2013-11-13 Wed> 
+
+*** qRNASeq package
+**** DONE Clean-up and organize final source code
+**** DONE List important scripts
+**** DONE Test the new scripts
+
+** Thursday <2013-11-14 Thu>
+
+*** DONE Finish final corrections
+**** DONE Drop ZI parameter plot
+**** DONE Rearrange conclusions
+**** DONE Check the introduction
+**** DONE Check last bad gene
+
+** Friday <2013-11-15 Fri>
+
+*** RNA-Seq Quantification programs
+
+**** DONE Assessment of transcript reconstruction methods for RNA-Seq
+- 25 protocols out of 14 programs
+
+- Matching at the nucleotide level wrt to reference annotation
+- Matching at the exon level wrt to reference annotation
+- Intron detection
+
+- Exon assembly into transcripts
+-- Exon detection reached a plateau when reaching certain coverage level
+
+- Transcript-level Quantification
+-- Strong RPKM agreement between Augustus, iReckon, mGene and Trembly
+-- Nanostring nCounter for independent expression-level quantification
+
+- Discussion
+
+-- RNA-seq enables discovery of non-coding regions; a high sequencing is required.
+-- Recommend Cufflinks and rQuant (part of mGene protocol) when having finished genome 
+and high-quality annotation.
+
+**** DONE RSEM article
+- Uses a probabilistic graphical model in order to account for sequence and gene
+features. The fit is done via EM algorithm.
+
+- Abundance estimates
+- 95% credibility intervals
+- Visualize
+- Simulate RNA-Seq data
+
+- DOES NOT NEED REFERENCE GENOME
+- Take into account multi-mapping reads
+
+- Superior performance to: Cufflinks, IsoEM and rQuant
+- Single end reads give better accurate estimates at the gene level
+- Paired en reads give better accurate estimates transcripts within-gene level 
+- No significant improvement in performance taking into account quality scores.
+
+- Uses qRT-PCR technique to give gold-standard based
+- Uses MAQC data set which initially was a microarray experiment.
+
+For more details this article:
+"RNA-Seq gene expression estimation with read mapping uncertainty"
+
+
+* <2013-11-18 Mon>--<2013-11-22 Fri>
+
+** Monday <2013-11-18 Mon>
+
+***** DONE IsoEM article
+- Takes into account multireads
+- Considers base quality scores
+- Compares with performance with: Cufflinks and RSEM(v1).
+
+***** DONE Express article
+- Takes into account multireads using insert size information
+- Models sequencing bias
+- One pass algorithm
+- Doesn't use a reference genome as RSEM. Actually both of them use exactly the same
+input
+- Counts with sequencing error model
+- Constant memory usage and linear running time
+- The output can readily provide input for downstream analysis such as 
+gene expression analysis using for instance edgeR or DESeq. eXpress provides
+estimated counts as an output.
+- Can run analysis in less time and good accuracy with a higher depth.
+- Can be connected directly to a sequencer in order to estimate 
+in real time transcript abundances. This means this program can be start working
+as the sequencer is outputting reads.
+
+***** TODO NEUMA article
+***** TODO MMSEQ article
+***** TODO BitSeq article
+
+**** Pipeline document
+***** DONE Table
+
+
+*** TODO Try local refitting based on categories
+
+** Tuesday <2013-11-19 Tue>
+
+*** DONE Meeting
+
+*** DONE Correct manuscript
+**** Modify introduction
+Mention model based methods
+
+
+*** DONE Implement Poisson model for paired-end reads for qRNASeq
+
+** Wednesday <2013-11-20 Wed> 
+
+*** DONE Correct manuscript
+**** DONE Methods Section
+
+**** DONE Results
+
+**** DONE Discussion
+*** DONE Check eXpress documentation
+
+** Thursday <2013-11-21 Thu>
+
+*** DONE Test Poisson model for paired end reads for qRNASeq
+*** DONE Check RSEM documentation
+*** DONE Download Bowtie
+*** DONE Download Cufflinks
+
+** Friday <2013-11-22 Fri>
+
+*** DONE Polish up text
+
+
+* <2013-11-25 Mon>--<2013-11-29 Fri>
+
+** <2013-11-25 Mon>
+
+*** DONE Build category plots for qRNASeq
+*** DONE Tried convexity of ZIP and NB
+
+** <2013-11-26 Tue>
+
+*** TODO RNASeq Project Katerina
+**** DONE 1. Data Step
+**** DONE 2. Prepare
+**** DONE 3. Run fastqc
+
+** <2013-11-27 Wed>
+
+*** DONE RNASeq Project Katerina
+**** 4. Adapter cutting
+**** 5. Alignment
+
+** <2013-11-29 Fri>
+
+*** RNASeq Higgins
+**** DONE Prepare Script and files
+
+
+* <2013-12-02 Mon>--<2013-12-06 Fri>
+
+** <2013-12-02 Mon>
+*** RNASeq Project Katerina
+**** DONE Check and redo one of the samples
+
+*** RNASeq Project Higgins
+**** DONE 1. Data Step
+**** DONE 2. Prepare
+files were uncompressed
+**** TODO 3. Run fastqc
+
+
+** <2013-12-03 Tue>
+
+*** RNASeq Project Katerina
+**** DONE Recheck Sample_RS-01708826
+
+*** Bora Project
+**** DONE Merge BAM files
+
+** <2013-12-04 Wed>
+
+*** RNASeq Project Katerina
+**** DONE Report alignment results
+*** Bora Project
+**** DONE Report Results
+
+** <2013-12-05 Thu>
+*** Katerina Project
+**** DONE Check over RSeQC results
+**** DONE Store final results
+**** DONE Polish-up QC results
+
+** <2013-12-06 Fri>
+
+*** DONE Questions to Qiang
+**** DONE Make a sample sheet
+**** DONE Meet
+   
+
+* <2013-12-09 Mon>--<2013-12-13 Fri>
+** <2013-12-09 Mon>
+
+*** RNASeq Project Higgins
+**** DONE Run fastqc
+**** DONE Verify filesizes
+**** DONE Make fastQC report
+**** DONE Adapter scripts
+check this model script:
+
+/rpcc/hiseq2000raw/pipeline/Herschberger_HaloPlex_Lung_SNV\
+/data/H7R4FADXX/scripts/sge_gzip_cut.sh #cut and unzip
+
+**** DONE Make QC script
+
+** <2013-12-10 Tue>
+
+*** RNASeq Project Higgins
+**** DONE Make RSeQC script report
+**** DONE Run TopHat
+**** Make QC report
+**** Quantification Script
+     
+** <2013-12-11 Wed>
+*** RNASeq Project Higgins
+**** DONE Make QC report
+**** Quantification Script
+Not necessary for the moment.
+
+*** DONE Add extra information to QC Report
+**** Mapping rate include
+**** Disconcordant reads
+**** DONE Bar plot for the coding regions
+
+*** DONE Write a clean R script in order to report QC results
+
+** <2013-12-12 Thu>
+
+*** DONE Katerina Project
+**** DONE QC and Alignment Report
+
+*** DONE Test the QC report script
+
+
+** <2013-12-13 Fri>
+*** Bora Project
+**** TODO Make QC scripts
+**** TODO Make QC report
+
+*** Isoform Quantification Project
+**** DONE Proofread the document
+**** DONE Make corrections
+**** DONE Arrange the meeting to discuss for Monday
+
+
+* <2013-12-16 Mon>--<2013-12-20 Fri>
+** <2013-12-16 Mon>
+
+*** Higgins Project
+**** DONE Trim the bad quality reads
+**** DONE Rerun cutadapt
+**** DONE Run alignment
+**** Alignment Summary
+**** Work on the cutadapt summary
+
+** <2013-12-17 Tue>
+
+*** Isoform Quantification Comparison
+**** DONE Organize folders
+**** DONE Download Softwares
+**** DONE Get softwares properly installed
+**** DONE Define the data set
+We would run a simulation with flux simulator
+
+** <2013-12-18 Wed>
+
+*** Isoform Quantification Comparison
+**** DONE Simulation
+***** DONE Obtain and read flux simulator documentation
+***** DONE Choose a transcriptome annotation
+***** DONE Select 1000 genes from the annotation
+***** DONE Run the flux simulator
+
+** <2013-12-19 Thu>
+
+*** Isoform Quantification Comparison
+**** DONE Run flux simulator with error model
+**** DONE Split reads into mate pairs
+
+*** Meeting
+**** QC results from Katerina
+***** Update the report
+***** Separate by specimen
+
+**** QC results from Higgins
+***** Include observations
+Normal Sample-2 has insufficient mapping reads and reports overabundance of introns
+
+In general the aligned reads per sample is below 80% which is inferior to the
+expected percentage of reliable samples.
+
+All samples display a systematic low phred score bias towards the last 20 base pairs
+of the reads of the mate pairs.
+ 
+**** Output summary from fastqc
+
+** <2013-12-20 Fri>
+*** Isoform Quantification Comparison
+**** TODO Perform alignment with Top Hat
+**** TODO Perform alignment to the reads
+**** TODO Run eXpress analysis
+**** TODO Run RSEM analysis
+
+**** TODO Implement Local ZIP and NB
+**** TODO Convexity of ZIP and NB
+
+
+* <2013-12-26 Thu>--<2013-12-27 Fri>
+** <2013-12-26 Thu>
+
+*** DONE Including fastqc report in Katerina's QC control
+*** Run fastqc on sim2
+*** DONE Check programs that transform bed to bam formats
+look bedtools software
+
+*** DONE Recheck simulation parameters and outcome
+Look for a way to only obtain fixed size reads
+
+
+** <2013-12-27 Fri>
+*** DONE Clip small fragments (base pairs)
+*** DONE Transform bed to bam format
+
+*** TODO Set scripts and evaluate errors from the different softwares
+**** eXpress
+Problem with the bam file and reference. They don't seem to match.
+**** IsoEM
+Installation error probably
+**** NEUMA
+
+**** BitSeq
+
+**** MMSEQ
+
+*** Check for available simulated data sets
+Based on [[http://www.nature.com/nmeth/journal/v10/n12/full/nmeth.2722.html][Engtrom et al. 2013]]
+
+
+* <2013-12-30 Mon>--<2013-12-31 Tue>
+** <2013-12-30 Mon>
+
+*** Meet with Qiang
+**** Log errors
+*** Potential To Dos
+**** Pairwise correlation accross methods
+**** Single end reads performance
+**** Paired end reads performance
+**** Execution time
+**** Use real data set
+Use one human and another mouse sample
+
+
+** <2013-12-31 Tue>
+
+*** DONE Regenerate gtf with only for coding proteins
+**** 1000 genes
+**** 3 genes
+
+*** DONE Simulate an experiment with 3 genes
+**** Parameters
+75 bps, single end
+**** DONE fastqc 
+**** DONE TopHat
+
+*** Check software
+**** DONE RSEM
+Their is an error where the number of transcripts doesn't seem to match.
+The problem seems to be when writing gtf as fasta.
+
+** <2014-01-02 Thu>
+
+*** DONE Align reads with reference transcriptome in bowtie 
+The alignment can be found in:
+/home/ecortes/Projects/Project_11_IsoQuant_Comp/Data/sim_reads/sim5/bowtie/accepted_hits.sam
+
+*** Check Software
+**** DONE RSEM
+**** DONE BitSeq
+
+
+** <2014-01-03 Fri>
+*** Structural Variation Project
+**** Detect False positive calls 
+
+
+* <2014-01-06 Mon>--<2014-01-10 Fri>
+
+** <2014-01-06 Mon>
+
+*** Install BitSeq and run it
+Note that the version ran so far is an R package.
+The installed program is a C++ implementation.
+
+*** Check Software
+**** DONE eXpress
+
+** <2014-01-07 Tue>
+
+*** Check Software
+**** DONE MMSEQ
+
+*** BRC016 Sample
+25% completed
+
+** <2014-01-08 Wed>
+
+*** DONE BRC016 Sample 50%
+
+** <2014-01-09 Thu>
+
+*** DONE Check Sample BRC016 90%
+
+
+** <2014-01-10 Fri>
+*** DONE Check Sample BRC016 100%
+*** DONE Compare with Dr. Wang's
+*** DONE Report the sample
+
+
+* <2014-01-13 Mon>--<2014-01-17 Fri>
+
+** <2014-01-13 Mon>
+
+*** Check Software
+**** DONE IsoEM
+
+check the error
+**** DONE Cufflinks
+check the error
+**** DONE NEUMA
+Need to know how to generate g2NM, g2S, gU and iU files
+
+*** Extract information from .pro file
+
+** <2014-01-14 Tue>
+
+*** Gather and format outputs
+**** DONE eXpress
+**** DONE BitSeq
+**** DONE MMSEQ
+**** DONE RSEM
+
+*** Compare outputs
+**** Do some plots
+***** DONE pie plot for true abundance
+***** DONE pie plot for true fpkm
+
+**** Check the real abundances
+/home/ecortes/Projects/Project_11_IsoQuant_Comp/Data/sim_reads/sim5/sim5.pro
+
+** <2014-01-15 Wed>
+*** Project 13 Raw Counts
+**** DONE Mouse data
+
+** <2014-01-16 Thu>
+*** Project 13 Raw Counts
+**** Human data
+***** Run Quantification Script
+***** Summarize Quantification
+** <2014-01-17 Fri>
+*** Finish reviewing sample 018
+
+
+* <2014-01-21 Tue>--<2014-01-24 Fri>
+** <2014-01-21 Tue>
+*** DONE [#A] Read Genome structural variation discovery and genotyping
+Half way through it
+*** TODO Read Cancer genome-sequencing study design
+*** DONE Read Chapter 2 from Fundamentals of Statistical Genetics
+
+** <2014-01-22 Wed>
+*** Isoform Quantification meeting preparation
+**** Review of the article
+**** Show some results of the software comparison
+
+
+* <2014-01-27 Mon>--<2014-01-31 Fri>
+** <2014-01-27 Mon>
+*** DONE Microarray Analysis
+*** DONE Work on final document
+**** DONE RNA-Seq figure
+
+** <2014-01-28 Tue>
+*** Final document
+**** DONE Make corrections
+
+** <2014-01-29 Wed>
+*** Isoform Project
+**** Meeting
+
+*** Isoform Quantification Comparison
+**** DONE Generate pair end samples
+**** DONE QC
+**** DONE Aligment with Bowtie2
+
+** <2014-01-30 Thu>
+*** Finish last corrections in the document
+**** DONE Finish up the notations part
+
+*** Isoform Quantification Comparison (Paired End Reads)
+**** DONE Complete reference fasta file
+**** DONE Perform alignment with bowtie2
+ 
+** <2014-01-31 Fri>
+*** Finish last corrections in the document
+**** DONE Reread the whole document
+**** DONE Send the latest update of the document
+
+*** Isoform Quantification Comparison (Paired End Reads)
+**** DONE Complete reference fasta file
+**** DONE Perform alignment with bowtie2
+ 
+**** Perform alignment with bowtie
+Something about the paired end reads that bwt doesn't like. 
+**** DONE Run BitSeq
+**** TODO Run RSEM
+Doesn't support gapped alignments output from btw2. It only seems to work
+with bowtie. But bowtie alignment is only reporting less than 1% of the data.
+
+**** DONE Run eXpress
+- During the sample preparation, the alignment rate is 86.32%
+- Includes a bias correction option
+
+**** DONE Run MMSEQ
+
+
+* <2014-02-03 Mon>--<2014-02-07 Fri>
+** <2014-02-03 Mon> <2014-02-04 Tue> <2014-02-05 Wed> <2014-02-06 Thu> <2014-02-07 Fri>
+
+*** Isoform Quantification Comparison (Paired End Reads)
+THE RUNS THAT HAVE BEEN DONE ONLY CONSIDER 1 MULTIPLE READ ALIGNMENT
+**** TODO Run Poisson model 
+**** DONE Run Cufflinks
+**** TODO NEUMA
+**** TODO IsoEM
+Has a bias correction option.
+ 
+**** DONE Summarize
+***** Relative count abundance
+***** Relative expression abundance (relative FPKM)
+
+**** DONE Check specifications of BAM file for each software
+
+**** DONE Run the softwares with all possible alignments 
+(Build a big script for running everything)
+***** DONE bowtie run
+***** DONE eXpress
+***** DONE MMSEQ
+***** DONE BitSeq
+***** DONE Cufflinks
+***** DONE rSeq
+
+***** DONE Place figures in report
+
+
+* <2014-02-10 Mon>--<2014-02-14 Fri>
+** <2014-02-10 Mon>--<2015-02-11 Wed>
+*** DONE Assemble whole pipeline
+*** DONE Test pipeline with 3 genes
+*** DONE Adjust plots
+
+** <2014-02-13 Thu>
+*** Run 100 genes
+**** DONE 1. Run flux
+**** DONE 2. Data_prep
+**** DONE 3. Run all_in
+
+*** DONE Implement similarity function
+*** DONE Calculate fpkm from mapped reads
+
+** <2014-02-14 Fri>
+*** DONE Check all_in.sh simulation
+*** DONE Summarize results
+*** Coverage Analysis
+Total bps considered in the experiment are: 494801
+In this case, the coverage for the 100_genes experiment would be roughly 4X.
+Next simulation would probably would have 10X; this would be 50M reads.
+
+
+* <2014-02-18 Tue>--<2014-02-21 Fri>
+** <2014-02-18 Tue>
+
+*** DONE Extract an incidence/frequency matrix from bam files.
+Too slow!
+
+*** DONE Parallelize
+*** DONE Calculate performance time
+
+** <2014-02-19 Wed>--<2014-02-21 Fri>
+
+*** 1000 Genes Experiment
+Correct small bugs in code and polish up.
+
+ 
+* <2014-02-24 Mon>--<2014-02-28 Fri>
+
+** <2014-02-25 Tue>
+Summarize 1000 genes experiment. 
+Fix bugs.
+** <2014-02-26 Wed>
+
+*** DONE Recheck expected coverage of first experiment
+Around 265
+
+*** Work on Coverage Analysis Experiment
+**** DONE Make R script to modify the .par file.
+
+*** Discussion
+**** Control for transcript similarity
+**** Repeat analysis from first article
+**** Run more simulations (at least 10) to double check final results
+
+** <2014-02-27 Thu>--<2014-02-28 Fri>
+
+*** DONE Check the transcript disjointness and correct it
+*** DONE Control for number of transcripts
+
+
+* <2014-03-03 Mon>--<2014-03-07 Fri>
+** <2014-03-03 Mon>
+
+*** DONE Coverage Variation
+Rerun simulations changing read number and expression values.
+The initial 1000 selected genes are kept.
+
+** <2014-03-04 Tue>
+
+*** DONE Run first article analysis with the current data set.
+974 Genes were processed. 
+
+*** OPT paperwork
+Waiting for: employer's letter and official transcripts to send to ISS
+
+** <2014-03-05 Wed>
+*** DONE Summarize first experiment
+The program is reading more transcripts than it should.
+
+*** DONE Finish comparison article report
+Missing a table
+
+*** DONE Meeting @ 2pm
+
+*** DONE Double check eXpress
+run different batch rounds
+
+** <2014-03-06 Thu>
+
+*** DONE Tweak eXpress
+**** Batch: With 3 we get best genewise performance; as batch increases the genewise perf. gets better.
+**** Online: Best transcriptwise is with 1; doesn't improve genewise performance.
+For both of them the correlation is really poor!!!! 
+
+*** DONE Do a big similarity collection of human genes. 
+Also record the length of the transcript and number of transcripts.
+
+** <2014-03-07 Fri>
+
+*** Pipeline for RNA-Seq QC 
+0. Check Sample Information
+1. Run fastqc
+2. Align with Top Hat
+3. Run RSeQC
+3.1 Read distribution
+3.2 Junction Saturation
+3.3 Junction events saturation
+3.4 Coverage
+
+4. Report
+*** Higgins Analysis
+**** fastqc
+**** fastqc report
+**** trimming
+**** TopHat
+
+*** DONE Do script summarizing disjointness scores
+
+
+* <2014-03-10 Mon>--<2014-03-14 Fri>
+** <2014-03-10 Mon>
+*** Higgins Analysis
+**** RSeQC
+**** QC Report
+
+##############################################################
+
+
+** Check disjointness big file
+** Run a new simulation
+With modified gene selection, based on the disjointness scores and number of transcripts
+
+** Prepare a clean simulation template
+
+** <2014-03-12 Wed>
+
+** <2014-03-13 Thu>
+*** Run the pipeline in a single run
+
+** <2014-03-14 Fri>
+*** Meeting
+
+
+* <2014-03-17 Mon>--<2014-03-21 Fri>
+
+*** Run with only protein coding genes
+Results can be found under name new.
+*** Single-end experiment repeat
+**** Repeat the first experiment
+**** Repeat Rev
+**** Do a new simulation
+
+*** Category and depth plots
+*** Repeat coverage experiment
+
+*** This week's report
+**** Explain the difference between both disjointness measures
+**** Show why the measures are different across reports
+**** Very first simulation
+**** New simulation
+**** Coverage experiment
+
+
+* <2014-03-24 Mon>--<2014-03-28 Fri>
+
+** <2014-03-24 Mon>--<2014-03-25 Tue>
+
+*** DONE Improve split_list_job script
+*** DONE Repeat single-end simulation with a larger coverage (200X) with no error model
+*** DONE Coverage experiment for 200X experiment
+*** Read article: Cancer genome-sequencing study design
+*** DONE Read PennSeq
+
+*** DONE Summarize 200X simulation
+*** DONE Prepare meeting
+
+*** DONE Read iReckon
+
+
+** <2014-03-26 Wed>
+meeting   
+** <2014-03-27 Thu>
+*** DONE New disjointness measures plots
+** <2014-03-28 Fri> 
+*** DONE Cancer Vaccine run
+*** DONE Disjointness meeting
+*** DONE More disjointness plots 
+
+
+* <2014-03-31 Mon>--<2014-04-04 Fri>
+** <2014-03-31 Mon>--<2014-04-02 Wed>
+*** Update the single-end reads article
+**** DONE Use new data  
+**** DONE Make Category plots work
+**** Conclusions
+***** Increase of Coverage Variation improves performance to certain degree of saturation 
+***** New methods outperform
+***** Disjointness score and reliable results
+***** Performance is independent from the number of transcripts
+
+** <2014-04-03 Thu>
+*** DONE Summary Ovarian Vaccine
+*** DONE Summary Kidney
+*** DONE Polish up final single-end article
+
+** <2014-04-04 Fri>
+*** DONE Finish single-end article
+*** DONE Meeting to present manuscript
+**** DONE Revise CONTROL.PANEL.sh
+
+
+* <2014-04-07 Mon>--<2014-04-11 Fri>
+** <2014-04-07 Mon>
+*** Last details single end experiment
+**** Finish testing CONTROL.sh
+Missing generation of plots and summary
+**** Pick 40 genes and reflux them 50 times.
+
+*** TODO Paired end reads experiment
+**** DONE Review results with new disjointness measure
+
+** <2014-04-08 Tue>
+*** DONE Rerun Ovarian Vaccine data
+*** DONE Finish analysis from Higgins 9.2
+
+** <2014-04-09 Wed>
+*** DONE Rerun Ovarian Vaccine
+*** DONE Rerun Higgins 9.2
+
+**  <2014-04-10 Thu>
+*** DONE Report Ovarian Vaccine 
+*** DONE Report Higgins 9.2
+
+**  <2014-04-11 Fri>
+*** Add MISO to the Isoform comparison
+*** Process MISO's output
+*** DONE Revise iReckon
+*** DONE Revise Miso
+
+
+* <2014-04-14 Mon>--<2014-04-17 Thu>
+
+** <2014-04-14 Mon>--<2014-04-17 Thu>
+*** DONE Reflux experiment
+*** DONE Add iReckon to the Isoform comparison
+There's a problem with the format that is giving a hard time to continue
+*** DONE Process iReckon's output
+*** DONE Recheck Alignments
+*** DONE Quantify by BAMS
+
+
+* <2014-04-21 Mon>--<2014-04-25 Fri>
+** <2014-04-21 Mon>
+*** DONE Modify reads: add sham quality scores
+*** DONE Advance in paired-end reads comparison
+*** DONE Update article corrections
+
+** <2014-04-22 Tue>
+*** DONE Summarize new experiment
+*** DONE Python lesson 
+Python the hard way ex 1-20
+
+** <2014-04-23 Wed>
+*** Nugen Project QC
+**** DONE fastqc
+**** DONE adapter cutting
+No need for it.
+**** DONE alignment
+**** DONE RSeQC
+
+** <2014-04-24 Thu>
+*** DONE Nugen Project QC
+**** DONE summary
+
+*** Proteomics Project
+**** DONE Read about bayesian analysis
+
+
+*** Update corrections
+**** DONE Review corrections for mail part 2.2 and part 1 of results
+
+
+** <2014-04-25 Fri>
+
+*** Proteomics Project
+**** DONE Read about bayesian analysis
+**** Learn about data structure
+**** DONE Obtained article: An Exploration of Aspects of Bayesian Multiple Testing
+**** DONE Check article Statistics for Proteomics: A review of Tools for Analyzing Experimental Data
+**** DONE Check article: Empirical Bayes Analysis of Quantitative Proteomics Experiments
+
+*** Update corrections
+**** DONE Review corrections for mail part 2.2 and part 1 of results
+**** Re-do in R
+***** DONE Plots: enlarge fonts
+***** DONE Dispersion and zero-inflation distributions
+***** DONE Cat-depth Plots
+
+*** DONE Write P likelihood in terms of the categories
+
+
+* <2014-04-28 Mon>--<2014-05-02 Fri>
+** <2014-04-28 Mon>
+*** Proteomics Project
+**** Read MCMCglmm
+**** Learn about data structure
+*** DONE Make reflux work
+
+** <2014-05-02 Fri>
+
+*** DONE Reflux
+**** DONE Run simulations (50)
+
+*** DONE Finish Model diagram for the article
+
+
+* <2014-05-05 Mon>--<2014-05-09 Fri>
+** <2014-05-05 Mon>
+*** Single-end article
+**** DONE Summarize reflux experiments
+**** DONE Make list of overlapped genes
+
+*** Proteomics Data
+**** DONE Obtain the datasets
+**** DONE Print articles
+***** DONE MSstats article
+***** DONE MSstats' Vignette
+
+*** DONE Speak with HR about EAD delay
+
+** <2014-05-06 Tue>
+*** Single-end article
+**** DONE Repeat reflux experiment
+Name: rf
+Description: Top and bottom 20 overlapped genes in the three methods in new run.
+**** DONE Summarize the replications
+Different plots were polished up in order to visualize the obtained results.
+*** DONE HR: Bring latest I-20
+
+** <2014-05-07 Wed>
+*** Single-end article 
+**** DONE Correct typos
+**** DONE Write document for the reflux experiment
+**** DONE Send reflux manuscript for correction
+
+** <2014-05-08 Thu>
+*** Proteomics
+**** DONE MSstats package
+
+** DONE <2014-05-09 Fri>
+*** Proteomics
+**** DONE MCMCglmm package
+
+
+* <2014-05-12 Mon>--<2014-05-16 Fri>
+** <2014-05-12 Mon>
+*** Proteomics
+**** DONE Inspect the data
+**** DONE Poke around the packages
+***** DONE MSstats
+***** DONE Qiang's package
+Install the package
+Follow the examples from MCMCglmm's class notes
+
+**** The chores
+***** Test statistic
+MSstats uses t-test statistic that is not quite robust. Their is an F-test statistic that seems to
+perform better.
+Something about calculating degrees of freedom???
+
+The test statistic that we are looking for comes from an empirical bayes procedure done for the 
+analysis of microarray expression analysis. This approach is not straight forward to implement, but
+it is used in limma R package. The idea would be to analyze the data with limma and check if the results
+make sense.
+
+***** Check if the MCMCglmm is correct
+Could make a comparison between the output of MSstats and MStest. A mixed effects model can be 
+specified in MSstats.
+Where do the priors come from?
+
+Why is it relevant to use an MCMC approach? 
+R/ Because finding analytical expressions of posterior
+distributions is not an easy task.
+
+***** Empirical Bayes
+Apply an empirical bayes approach to/instead of linear mixed model.
+Their is an empirical bayes approach suggested in the pre-MSstats article. Not sure if it is 
+implemented in the R package. The package doesn't suggest anywhere the use of an empirical bayes model.
+
+*** RSeQC and fastqc for the experiments
+Check the different flux option and inspect them with RSeQC
+
+
+* <2014-05-19 Mon>--<2014-05-23 Fri>
+** <2014-05-21 Wed>--<2014-05-23 Fri>
+*** DONE Proof-read manuscript and send it.
+*** DONE Check the intron levels in the RNASeq report.
+*** DONE Read the technical variability article
+*** DONE Clean-up scripts for isoform quantification methods
+*** DONE Review where we left off with the isoform quantification software
+The mapping rate is 100% for all of the alignment softwares.
+Print and review what has been done so far.
+Should we start writing something?
+
+
+* <2014-05-27 Tue>--<2014-05-30 Fri>
+** <2014-05-27 Tue>--<2014-05-29 Thu>
+*** Read about Bayesian Statistical Analysis to implement and support MStest package
+
+** <2014-05-30 Fri>
+*** DONE Review corrections for the article
+
+*** TODO Review and assemble plots
+
+
+* <2014-06-02 Mon>--<2014-06-06 Fri>
+
+** <2014-06-02 Mon>--<2014-06-03 Tue>
+*** DONE Setup the new workstation
+*** Article correction
+**** Modify plots
+***** DONE f_CP_ZIP_ENSG00000100994.pdf (remove first two panels)
+Should we include a plot that shows how the other distributions
+improve the fit?
+***** DONE Figure 7 (f_COV_G.pdf): Reduce the domain of the histogram
+***** DONE Figure 8 (f_COV_BOX.pdf): Modify x-label
+***** DONE Merge 1 (Overall performance)
+***** DONE Merge 2 (Coverage plots)
+***** DONE Merge 3 (Examples)
+***** DONE Dissimilarity bounds (f_DIS_RMS.pdf)
+
+
+** <2014-06-04 Wed>--<2014-06-06 Fri>
+ 
+*** DONE Build bootstrap pipeline
+*** TODO Run 100 bootstraps
+So far: 10
+
+*** Proteomics project
+**** TODO Check if the model for MStest is right.
+**** TODO Implement a Bayes Linear Mixed Model for protein testing.
+Implementation examples are found in LIMMA.
+Also an
+**** TODO Find a multiple testing scheme for proteomics differential testing.
+
+**** DONE So far...
+***** DONE Took a data set and tried MSstats on it.
+***** DONE Tested MStest.
+***** DONE Read documentation of MSstats.
+***** DONE Read MCMCglmm documentation.
+***** DONE Proteomic Lexicon
+
+**** DONE Read more from bayesian mixed models
+
+
+* <2014-06-09 Mon>--<2014-06-13 Fri>
+
+** <2014-06-09 Mon>
+*** DONE Finish article correction
+*** DONE Document proteomics project
+Found some useful presentations and articles.
+There's this empirical bayes article that can help implement what we 
+have on mind.
+*** DONE Install MSstats and MStest
+
+** <2014-06-10 Tue>--<2014-06-13 Fri>
+*** DONE Read Life and Its Molecules
+*** DONE Recheck MSstats and MStest manual
+*** DONE Read about bayes linear mixed models
+*** DONE Read empirical bayes article
+*** DONE Read Computational Spectrometry-Based Proteomics Article
+*** DONE Review MCMCglmm
+*** DONE Review Statistical protein quantification article
+
+
+* <2014-06-16 Mon>--<2014-06-20 Fri>
+** <2014-06-16 Mon>
+
+*** Re-read Clough and figure how the Empirical Bayes Model is derived.
+*** Express a linear mixed model for the proteomics data.
+
+*** Compare results of MStest with MSstats
+**** How to format the data to make it readable for MSstats.
+ 
+
+* <2014-06-30 Mon>--<2014-07-03 Thu>
+** <2014-06-30 Mon>
+*** Read about empirical bayes methodology
+Illustrating empirical Bayes methods
+*** DONE Report updates of Proteomics project
+*** DONE Read documentation regarding priors
+Article:
+Prior distributions for variance parameters in hierarchical models
+
+** <2014-07-01 Tue>
+*** TODO Check and tweak the priors
+*** TODO Read documentation regarding priors
+*** DONE Visualize the data
+
+
+* <2014-07-07 Mon>--<2014-07-11 Fri>
+** Protein project
+*** DONE Show results (<2014-07-08 Tue>) to Dr. Wang
+*** <2014-07-10 Thu>--<2014-07-11 Fri>
+**** DONE Corrections and improvements
+***** DONE Run lmm with subject random effect
+***** DONE Modify and improve report
+Include sensitivity analysis
+Pick new examples
+
+***** DONE Look into errors
+****** lmm
+"Error in `contrasts<-`(`*tmp*`, value = contr.funs[1 + isOF[nn]]) : \n  
+contrasts can be applied only to factors with 2 or more levels\n"
+
+****** MCMCglmm specified prior
+"Error in priorformat(if (NOpriorG) { : \n  
+V is the wrong dimension for some prior$G/prior$R elements\n"
+
+****** MCMCglmm with non-informative prior
+"Error in MCMCglmm(INTENSITY ~ COND, random = ~us(PEPTIDE):SUBJECT, 
+data = prot,  : \n  ill-conditioned G/R structure: 
+use proper priors if you haven't or rescale data if you have\n\n"
+
+
+* <2014-07-14 Mon>--<2014-07-18 Fri>
+** <2014-07-14 Mon>
+*** DONE Check LMM approaches that consider correlation structures
+Hierarchical linear mixed model documentation was read.
+*** DONE Model simple hierarchical models in R.
+Check article Linear Mixed Modeling using R. 
+
+
+** <2014-07-15 Tue>
+*** DONE Check lme4
+There is an R guide to use lme4
+
+*** DONE Packages for Hierarchical linear models
+**** hglm
+***** TODO Read R article
+
+**** HGLMMM
+***** TODO Read R article
+
+
+** <2014-07-16 Wed>
+*** lme4: Mixed effects modeling with R
+*** nlme has this function lme that is more flexible than lmer found in lme4
+
+*** Tweak MSstats with the data
+*** Compare MSstats results with ones obtained from MCMCglmm
+*** Review MStest protein_test structure
+*** Contact Professor Ma for assistance
+
+
+
+
+
+* <2014-07-21 Mon>--<2014-07-25 Fri>
+** <2014-07-21 Mon>
+*** Proteins
+**** DONE Read nlme book chapter 3 and 4.
+**** Script relevant code from chapter 3 and 4.
+
+*** Alternative Splicing
+**** DONE Read DEXSeq article
+**** Read Vignette DEXSeq
+
+** <2014-07-22 Tue>
+*** Proteins
+**** DONE Read nlme book chapter 5
+**** DONE Test some of the examples in chapter 5
+**** Implement for the protein data
+
+** <2014-07-23 Wed>
+*** Protein
+**** DONE Implement for the protein data
+Was able to find a way to incorporate correlations into the model.
+The inclusion of correlation information don't seem to throught significant results,
+compared to a simpler model.
+**** DONE Recheck chapter 5 of nlme book
+
+*** Alternative Splicing
+**** Read Vignette DEXSeq
+**** Test DEXSeq
+
+** <2014-07-24 Thu>
+*** Protein
+**** DONE Summarize results
+**** Prepare a document with the results
+
+*** Alternative Splicing
+**** DONE Read Vignette DEXSeq
+**** DONE Test DEXSeq
+
+
+**** DONE Read GPseq article
+Too little documentation.
+**** Read ALEXA-Seq article
+
+** <2014-07-25 Fri>
+*** Protein
+**** DONE Prepare a document with the results
+
+*** Alternative Splicing
+**** Read ALEXA-Seq article
+**** DONE Installation ALEXA-Seq
+Needs to install:
+1. Perl OK
+2. BLAST OK
+3. BWA OK
+4. mdust OK
+5. R OK
+6. Bioconductor OK
+7. Berkeley DB Perl Module
+8. MySQL-Community Server
+9. MySQL DBI/DBD
+10. BioPerl
+11. EnsEMBL API
+
+
+* <2014-07-28 Mon>--<2014-08-01 Fri>
+** <2014-07-28 Mon>--<2014-07-29 Tue>
+*** Protein
+**** Make MSstats work with the data
+**** DONE Try lme4 package
+Follow the code in the text book.
+The key function is lmer.
+**** Tweak parameter for MCMCglmm
+
+
+
+* <2014-08-04 Mon>--<2014-08-08 Fri>
+
+** Proteins
+*** DONE What implementation does MSstats work with?
+lme4 and lmer is strongly used. For model with only fixed effects, lm is used.
+
+*** DONE Tweak R structure in MCMCglmm
+Examine what is said about R and G structures.
+
+The R structure for priors corresponds to variance distribution. 
+The default values are V=1 and nu=0.002.
+(nu can be considered to be degree of belief)
+
+Structure B of the priors specifies structure of the mean with default
+parameters mu=0 and V=1e+08. V is big for it not to be proper.
+
+G structure controls random effects in the model. This part specifies
+the parameters for an inverse Wishart distribution. nu is a scalar and 
+is also called the degrees of freedom. V is the expected covariance as
+nu tends to infinity. V should be a diagonal matrix.
+
+What happens when using improper priors?
+
+1. Improper priors can produce improper posteriors (meaningless results)
+2. Not always ensures that variance is non-zero. This can make bring
+problems to the estimation or result into a reducible chain.
+
+These are warnings of what can go wrong with improper priors, but the
+author gives further description of the different classes of improper
+priors.
+
+1. Flat improper prior: non-informative for the mean, but informative for
+the variance. It can be specified using:
+list(R=list(V=1, nu=0)).
+Here, the posterior is basically equivalent to the likelihood.
+2. Non-informative Improper Prior: uniform prior for the standard deviation 
+on non-negative interval (nu=-1) or non-informative for variance component 
+(nu=-2):
+list(R=list(V=1e-16, nu=-1)) or list(R=list(V=1e-16, nu=-2))
+
+Prior for Covariance Matrices
+
+
+*** Document EB for proteins
+**** DONE Check the article Protein Quantification in Label-Free LC-MS Experiments, especially the bibliography for EB methods.
+
+**** DONE Check limma implementation
+
+**** DONE Apply limma to the protein data
+No can do. The model is different and fairly simple compared to what wants to be
+attempted to do with LC-MS data.
+
+**** Implement the formula in the Protein Quantification article
+Need to figure out how to estimate d0 and sigma0.
+
+
+* <2014-08-11 Mon>--<2014-08-15 Fri>
+
+** <2014-08-11 Mon>
+*** Proteins
+**** Make a summary document
+**** Show the summary document
+
+** <2014-08-12 Tue>
+*** Proteins
+**** DONE Readjust the degrees of freedom of EB
+**** DONE Check whether data is reliable. Check weird pvalue data points.
+... change the data if necessary
+
+*** DONE RNASeq job
+
+** <2014-08-13 Wed>
+*** Proteins
+**** DONE Review limma and read about moderated t-statistic
+**** DONE Check limma user's guide
+
+*** RNASeq
+**** DONE Summarize and report
+**** DONE Examine outlying sample
+
+** <2014-08-14 Thu>
+*** DONE Getting the spike-in groups right
+
+** <2014-08-15 Fri>
+*** DONE Show results so far
+The RNASeq and the Protein stuff
+
+*** DONE Read and document linear mixed models
+
+* <2014-08-18 Mon>--<2014-08-22 Fri>
+** <2014-08-18 Mon>
+*** Continue LMM exploration
+*** Read Permutation Methods book
+*** Check Bayesian mixed models
+
+** <2014-08-19 Tue>--<2014-08-20 Wed>
+*** MAQC data
+**** Perform the analysis for the 3 methods
+Bad Results for SRX016371
+> summary(lm(log(VALUE)~log(P), resP))$r.squared
+[1] 0.05991819
+> summary(lm(log(VALUE)~log(NB), resP))$r.squared
+[1] 0.002767938
+> summary(lm(log(VALUE)~log(ZIP), resP))$r.squared
+[1] 0.1244039
+
+**** DONE Rerun for SRX016367
+Missing the summarization
+**** DONE Rerun for SRX016370
+Missing the summarization
+
+** <2014-08-21 Thu>
+*** DONE Summarize SRX016367
+Still doesn't look good!
+
+> summary(lm(log(VALUE)~log(P), resP))$r.squared
+[1] 0.04535283
+> summary(lm(log(VALUE)~log(NB), resP))$r.squared
+[1] 0.001317997
+> summary(lm(log(VALUE)~log(ZIP), resP))$r.squared
+[1] 0.09936167
+*** DONE Summarize SRX016370
+Still doesn't look good!
+
+> summary(lm(log(VALUE)~log(P), resP))$r.squared
+[1] 0.04328025
+> summary(lm(log(VALUE)~log(NB), resP))$r.squared
+[1] 0.0009908967
+> summary(lm(log(VALUE)~log(ZIP), resP))$r.squared
+[1] 0.1250798
+*** DONE tophat/SRX016367
+**** DONE Rerun
+**** DONE Cufflinks
+**** DONE Summarize
+
+
+** <2014-08-22 Fri>
+*** Run PennSeq
+Still running and probably for a long time!!
+
+*** Summarize PennSeq
+*** DONE Explore linear mixed models
+
+* <2014-08-25 Mon>--<2014-08-29 Fri>
+** <2014-08-25 Mon>
+*** Compare cufflinks relative abundance to our methods
+*** Read PennSeq article
+
+** <2014-08-26 Tue>
+*** Get rSeq to run
+**** DONE Download refMrna.fa
+**** DONE Filter
+**** DONE Format 
+**** TODO Alignment with bowtie2
+**** TODO rSeq
+
+** <2014-08-27 Wed>
+*** Penn Seq
+**** DONE Summarize and plot gene subset selection
+**** Compare the three methods with cuff and PennSeq
+
+** <2014-08-28 Thu>
+*** Improve the 3 methods
+**** DONE Include read size variable for all the methods
+**** DONE Create an RPKM function for the output of the methods
+**** DONE Test it
+**** DONE Rerun
+
+*** DONE Compare all the methods and estimate R^2
+
+** <2014-08-29 Fri>
+*** Check outliers in PCR plots for the three methods
+*** DONE Explain the MSstats main function
+*** DONE Plot MAQC analysis
+
+* <2014-09-02 Tue>--<2014-09-05 Fri>
+** <2014-09-02 Tue>
+*** TODO Include MAQC plot in isoform article
+*** DONE Check and explore protein data sets
+**** DONE 1.5FC tech reps
+**** DONE 2FC bio reps
+*** Extract uniprot
+
+** <2014-09-03 Wed>
+*** DONE Meeting with Xiaomeng
+*** DONE Format 1.5FC data
+*** DONE EB function with limma
+*** DONE Run the proteins
+
+** <2014-09-04 Thu>
+*** DONE Adapt limma output from the proteomics data
+*** DONE Include MAQC data into the isoform project
+*** DONE Write about the MAQC data
+
+
+** <2014-09-05 Fri>
+*** DONE BioReps MSstats analysis
+**** DONE Retrieve the ROC curve function
+
+* <2014-09-08 Mon>--<2014-09-12 Fri>
+** <2014-09-09 Tue>
+*** DONE Revise EB for 2FC
+*** Check unbalanced case
+**** Check in nlme
+**** Check in MSstats
+**** Check in theory
+
+*** DONE Read empirical Bayes article
+
+** <2014-09-11 Thu>
+
+*** DONE Derivation of conjugate priors for multivariate normal case 
+*** DONE Check what happens when unbalanced cases show up in MSstats
+
+** <2014-09-12 Fri>
+
+*** DONE Read limma article thoroughly
+Extract information and summarize basic points
+
+
+* <2014-09-15 Mon>--<2014-09-19 Fri>
+** <2014-09-15 Mon>
+*** Try pbkrtest
+*** Run prot analysis for other data sets
+**** 1.5FC
+**** 3FC
+
+
+
+
+** <2014-09-16 Tue>--<2014-09-19 Fri>
+*** DONE Function to extract prior values in limma
+*** Chandha Project
+**** DONE Quantification
+cufflinks: done
+cuffquant: done (can be found in cufflinks script) 
+cuffnorm: done
+cuffdiff: done
+
+**** TODO Comparisons
+***** Comparison group 1: Race Disparity
+1. Race comparison (1 white sample vs. 2 AA samples)
+2. Aggressive vs. Benign ( 1 vs. 1)
+
+***** Comparison group 2: Drug Treatment
+1. D vs. WT
+2. E vs. WT
+3. Common DNA damage common and different
+      
+**** Summarization
+***** TODO Clustering
+ 
+**** TODO Pathway analysis
+
+* <2014-09-22 Mon>--<2014-09-26 Fri>
+** <2014-09-22 Mon>
+*** DONE Finish pathway analysis
+Still not sure how to report it
+
+** <2014-09-23 Tue>
+*** Proteins
+**** DONE Run 3FC data set
+**** DONE Read Illustrating Empirical Bayes
+** <2014-09-24 Wed>
+*** Proteins
+**** DONE Finish Illustrating Empirical Bayes
+
+
+*** Chandha Project
+**** DONE Finish summarizing pathway analysis
+Plots are in order and a PDF was generated with them.
+Also their is a list of relevant pathways.
+**** Try Qiang's quantifying method using DESeq
+
+** <2014-09-25 Thu>--<2014-09-26 Fri>
+*** Chandha Project
+**** DONE Read GSAASeqSP
+**** DONE Get it running
+**** DONE Comparison between two experiments (Venn Diagram)
+
+* <2014-09-29 Mon>--<2014-10-03 Fri>
+** <2014-09-29 Mon>
+*** Chandha Project
+**** DONE Summarize results from GSAA
+**** DONE Submit all results
+*** Protein
+**** DONE Implement upgraded EB
+
+** <2014-09-30 Tue>
+*** Proteins
+**** DONE Run upgraded EB
+**** DONE Summarizing results
+
+** <2014-10-01 Wed>
+*** Proteins
+**** DONE Check for bugs on code
+**** DONE Shortening the running workflow
+**** DONE Run 2FC unbalanced 
+
+** <2014-10-02 Thu>
+
+*** Meeting with Dr. Wang
+
+*** Chandha 
+**** DONE Venn Diagram List
+**** DONE Run DESeq2
+**** DONE Report DESeq2
+
+** <2014-10-03 Fri>
+
+*** Proteins
+**** DONE Correct df calculation
+**** DONE Run balanced
+**** DONE Correct the FC calculation
+
+* <2014-10-06 Mon>--<2014-10-10 Fri>
+
+** <2014-10-06 Mon>--<2014-10-07 Tue>
+*** Proteins
+**** DONE Rerun unbalanced case
+***** minus 3
+***** minus 5
+***** minus 8
+**** DONE Change df0 and see what happens
+
+*** RNASeq Chandha
+**** DONE Group Comparisons Cufflinks
+
+**** DONE Try lmm with inverse-wishart variance prior
+Not a big improvement
+
+** <2014-10-08 Wed>--<2014-10-09 Thu>
+*** DONE DESeq comparisons results
+*** How am I running limma
+*** Check the inverse chisquare in limma
+*** DONE Explain unequal variance model
+*** Testing for linear mixed models
+
+*** DONE MSstats and LMM (lmer) test statistics
+Provide: 
+1. Test statistics
+2. Degrees of freedom
+3. pvalues
+
+*** Figure out
+**** Why is it so important to find the inverse_gamma in limma
+**** What is the test that MSstats is doing totally wrong
+
+* <2014-10-14 Tue>--<2014-10-17 Fri>
+** <2014-10-14 Tue>
+*** Modifying residual variance in MSstats test
+**** blme
+***** Inducing point estimate
+
+* <2014-10-20 Mon>--<2014-10-24 Fri>
+** <2014-10-21 Tue>
+
+** <2014-10-22 Wed>
+*** DONE Learn some Python
+Think Python book (left of in Ch. 6)
+
+** <2014-10-23 Thu>
+*** DONE Find MLE of inverse-gamma
+*** DONE Compare blme residual variance with MSstats
+**** blme default (BLMM0)
+**** blme resid prior='invgamma' (def) (BLMM1)
+**** blme resid prior='invgamma' (MOM) (BLMM2)
+**** blme resid prior='invgamma' (MLE) (BLMM3)
+**** blme resid prior='invgamma' (MLE) + cov.prior='invgamma' (BLMM4)
+*** DONE Dig into blme source code
+Apparently it is not using analytical formulas
+*** Figure out a way to express posterior term of the residual variance
+
+* <2014-10-27 Mon>--<2014-10-31 Fri>
+** <2014-10-27 Mon>--<2014-10-29 Wed>
+*** Protein refitting strategy
+**** DONE Clean data
+**** DONE Run lmm and extract residual variance and sample variance
+**** DONE fit limma's fitF and extract df_0 and s_0 for res var and samp. var
+**** DONE Update sigma2 and sigmag^2
+**** DONE Redo test
+**** DONE Redo tests again
+
+** <2014-10-30 Thu> 
+*** Protein refitting
+**** DONE Compare refiting (tstats and se)
+**** DONE Clean data for 1.5FC_tech_reps
+
+** <2014-10-31 Fri>
+*** DONE Refit with 1.5FC_tech_reps
+The degrees of freedom of the refit seem to be too high.
+This seems to affect the residual adjusted variance very bad.
+
+* <2014-11-03 Mon>--<2014-11-07 Fri>
+** <2014-11-03 Mon>
+*** DONE Weekly meeting
+*** DONE Run refit adjusting the model
+**** 3FC 
+Need to figure out what's wrong with the MSstats Preprocess
+**** 1.5FC
+*** DONE Meeting @ 2 with Dr. Wang    
+
+** <2014-11-04 Tue>
+*** DONE Clean server files
+*** DONE Download Tumor articles
+*** DONE Start reading tumor articles
+Article: Allele-specific copy number analysis of tumors
+
+** <2014-11-05 Wed>
+*** DONE Refit adjusting the model and corrections
+**** DONE 2FC minor corrections of the residual variance component
+**** DONE Same corrections for the other experiments 
+**** DONE Obtain results
+*** DONE Latex results
+
+** <2014-11-06 Thu>--<2014-11-07 Fri>
+*** Models with MCMCglmm
+*** How to create an R package?
+*** Implement a package with eSet and clean scripts
+*** DONE Check Tumor articles
+Article: Absolute quantification of somatic DNA alterations in human cancer
+*** Ambrosone Project
+**** Prepare and adapt pipeline scripts
+**** DONE Download the data
+
+* <2014-11-10 Mon>--<2014-11-14 Fri>
+** <2014-11-10 Mon>
+*** Meeting with Dr. Wang
+Start writing theoretical background
+Find a real data set
+Run MCMCGLMM
+Start creating an R package
+
+*** Ambrosone Project
+**** DONE Fastqc processing
+**** DONE Fastqc report
+**** DONE Send the report
+
+*** Outline introduction
+
+** <2014-11-11 Tue>
+Veteran's Holiday
+
+*** Bayesian fitting manually
+Check the wikipedia entry conjugate priors
+
+
+* <2014-11-17 Mon>--<2014-11-21 Fri>
+** <2014-11-17 Mon>
+*** Read Pyclone
+*** Read about Graphical Models
+*** microRNA
+**** Summarize
+***** DONE Mapping
+***** DONE Frequencies
+
+** <2014-11-21 Fri>
+*** DONE [#A] Read Pyclone Supplementary info
+*** TODO [#B] Read THetA Model
+*** TODO Explore Pyclone software
+Look at the tutorial
+*** TODO Explore THetA software
+*** TODO Read ScyClone
+*** TODO Explore ScyClone software
+
+* <2014-11-24 Mon>--<2014-11-26 Wed>
+** <2014-11-24 Mon>--<2014-11-26 Wed> <2014-12-05 Fri>
+*** DONE Read THetA Model
+*** TODO Explore Pyclone software
+Look at the tutorial
+*** DONE Explore THetA software
+*** TODO Read THetA supplement
+**** TODO Check ASCAT and ABSOLUTE derivation
+*** DONE Read ScyClone
+*** TODO Explore ScyClone software
+*** DONE Read ASCAT
+*** TODO Explore ASCAT
+*** THetA2 format
+
+* <2014-12-01 Mon>--<2014-12-05 Fri>
+** <2014-12-01 Mon>
+*** Make THetA2 work with Octave
+Failed.
+As OncoSNP also uses a Runtime Matlab compiler also we can see what
+this software has to say.
+
+** <2014-12-02 Tue>
+*** sciClone formats
+**** DONE vaf
+**** DONE exclusion segments
+**** DONE read copy number segmentation
+
+** <2014-12-03 Wed>
+*** Run sciClone
+**** Unify exclusion regions 
+Should we use the intersept or union?
+
+**** One sample
+***** SARC3001-Td1a 
+Runs well, with min depth 50.
+
+Report:
+
+[1] "checking input data..."
+[1] "Not all variants fall within a provided copy number region. The copy number of these variants is assumed to be 2."
+11 sites (of 1256 original sites) are copy number neutral and have adequate depth in all samples
+1236 sites (of 1256 original sites) were removed because of copy-number alterations
+843 sites (of 1256 original sites) were removed because of inadequate depth
+1245 sites (of 1256 original sites) were removed because of copy-number alterations or inadequate depth
+[1] "clustering..."
+Disable overlapping std dev condition
+kmeans initialization:
+V1
+0.154639175257732
+0.036036036036036
+0.0918367346938776
+0.018348623853211
+0.0140515222482436
+0.0714285714285714
+0.0474137931034483
+0.0436893203883495
+0.116379310344828
+0.0850558081852005
+Using threshold:  0.7 
+Dropped cluster 1 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 1 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 1 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 2 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 2 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 2 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 2 with too few variants ( 0 ) center: 0.4999985
+Dropped cluster 2 with too few variants ( 0 ) center: 0.4999985
+Cluster 1 pi = 0.450 center = 0.033 SEM = (0.023, 0.045) sd = (0.012, 0.054)
+Cluster 2 pi = 0.550 center = 0.101 SEM = (0.081, 0.117) sd = (0.055, 0.135)
+Converged on the following parameters:
+mu:
+85.3483731116246 189.398198723577
+alpha:
+17.5532836751788 14.1959413081764
+nu:
+24.6001208017538 77.5886377460166
+beta:
+0.170448037486538 0.642113404411217
+pi:
+0.450431915501112	0.549568086498524
+[1] "finished clustering full-dimensional data..."
+[1] "found 2 clusters using bmm in full dimensional da
+***** SARC3001-Td1b
+[1] "checking input data..."
+[1] "Not all variants fall within a provided copy number region. The copy number of these variants is assumed to be 2."
+3 sites (of 675 original sites) are copy number neutral and have adequate depth in all samples
+653 sites (of 675 original sites) were removed because of copy-number alterations
+484 sites (of 675 original sites) were removed because of inadequate depth
+672 sites (of 675 original sites) were removed because of copy-number alterations or inadequate depth
+[1] "clustering..."
+Disable overlapping std dev condition
+[1] "ERROR: only 3  points 0 not enough points to cluster when using 10 intialClusters. Provide more data or red\nuce your maximumClusters option"
+[1] "Warning: no clusters, returning NULL"
+
+
+**** Multiple samples SARC3001
+[1] "checking input data..."
+[1] "Not all variants fall within a provided copy number region. The copy number of these variants is assumed to be 2."
+[1] "Not all variants fall within a provided copy number region. The copy number of these variants is assumed to be 2."
+2 sites (of 1884 original sites) are copy number neutral and have adequate depth in all samples
+1880 sites (of 1884 original sites) were removed because of copy-number alterations
+1812 sites (of 1884 original sites) were removed because of inadequate depth
+1882 sites (of 1884 original sites) were removed because of copy-number alterations or inadequate depth
+[1] "clustering each dimension independently"
+Disable overlapping std dev condition
+[1] "ERROR: only 2  points 0 not enough points to cluster when using 10 intialClusters. Provide more data or red\nuce your maximumClusters option"
+[1] "finished 1d clustering SARC3001-Td1a ..."
+[1] "found -Inf clusters using bmm in dimension SARC3001-Td1a"
+NULL
+Error in data.frame(..., check.names = FALSE) : 
+  arguments imply differing number of rows: 2, 0
+In addition: Warning message:
+In max(marginalClust[[i]]$cluster.assignments, na.rm = T) :
+  no non-missing arguments to max; returning -Inf
+
+
+** <2014-12-04 Thu>
+*** DONE Prepare morning meeting
+*** DONE Meeting with Dr. Wang
+*** Meeting for manual review at 2:00pm
+*** Look for the capture regions
+
+* <2014-12-08 Mon>--<2014-12-13 Sat>
+
+* <2014-12-15 Mon>--<2014-12-19 Fri>
+** <2014-12-17 Wed>
+*** Running GATK pipeline
+**** DONE BAM preparation
+**** DONE BAM realignment
+**** TODO Variant calling
+Currently I am running the GATK 3.0 pipeline at the Variant Calling stage.
+BTW I am using this pipeline document:
+
+/home/ecortes/Projects/Project_22_Tumor/GATK/germline/doc/pipeline.org
+
+Running Single sample (DEFAULT) option I've been able to obtain raw chr vcfs; this
+seems to be done by the script $piperun/CallVariants_single_chr.sh. The next step should be
+$piperun/CombineVCF.sh. I get the following mistake:
+
+../output/vcf/chr/norm_sams_SARC3.Y.raw.vcf not exist!
+
+at 
+
+log/ComV.germline.o237805
+
+What should I do in this case. I would like to skip this chromosome. I also notice that 
+the raw vcf are not being generated.
+
+Seems that the problem was solved skipping a chunk of code in CombineVCF.sh  that does not allow 
+to create a combined file if a chromosome is missing. The final output can be found in:
+
+../output/vcf/norm_sams_SARC3.raw.vcf.
+
+What I really need is a vcf file for each sample used. What I have is a raw vcf file for each
+chromosome on each samples. Is it OK to merge those in a single file or should there be some
+extra processing? If so what is the next to follow.
+
+* <2014-12-22 Mon>--<2014-12-26 Fri>
+** <2014-12-22 Mon>
+*** Gurova Microarray
+**** DONE Format data
+**** TODO Clustergrams and heatmaps
+
+** <2014-12-23 Tue>
+*** Gurova Microarray
+**** DONE Clustergrams and heatmaps
+**** DONE PCA
+
+*** Biao alignment
+**** TODO BAM format
+
+** <2014-12-24 Wed>
+*** Biao alignment
+**** DONE Report
+ 
+*** DONE How to create an R package
+
+** <2014-12-26 Fri>
+*** Protein
+**** Write code as an R package
+
+*** Tumor Heterogeneity
+**** DONE Run Theta2 samples in u2
+**** DONE Check GATK problem and report it
+**** Script Theta2 rerun with new intervals
+Check:
+/hn1/bioinformatics/analysis_doc/14/1114_Tumor_Heterogeneity/THetA/output
+
+* <2014-12-29 Mon>--<2015-01-02 Fri>
+** <2014-12-29 Mon>
+*** Run ThetA2 with new intervals
+
+* <2015-01-05 Mon>--<2015-01-09 Fri>
+** <2015-01-05 Mon>
+*** DONE Protein Test Package
+*** TODO Andreadis Alignment QC
+**** TODO Run RSeQC
+
+** <2015-01-06 Tue>
+*** DONE Andreadis Alignment QC
+**** DONE Run RSeQC
+**** DONE Run R summary scripts
+**** DONE Generate the report
+
+*** TODO Tumor Project
+**** TODO Rerunning GATK
+
+** <2015-01-07 Wed>
+*** TODO Tumor Project
+**** TODO Rerunning GATK
+
+** <2015-01-08 Thu>
+*** TODO Tumor Project
+**** TODO Rerunning GATK
+**** TODO Run Sciclone
+
+** <2015-01-09 Fri>
+*** TODO Tumor Project
+**** DONE Rerunning GATK
+**** DONE Finish running the GATK pipeline
+
+**** TODO Extract information from vcf files
+How to extract variant count information from vcf 
+using vcftools?
+
+**** TODO Sciclone
+**** TODO PhyloSub
+***** TODO Read article
+***** DONE Download package
+***** TODO Install package
+Every Python module is installed except that I have not been able to compile the following:
+
+g++ -o mh.o  mh.cpp  util.cpp `gsl-config --cflags --
+
+* <2015-01-12 Mon>--<2015-01-16 Fri>
+** <2015-01-12 Mon> 
+*** Mohler Alignment [3/3]
+**** DONE Fastqc
+**** DONE Prepare data
+**** DONE Alignment
+
+*** Tumor Project [1/5]
+**** DONE Read Article 
+A New Branch on the Tree: Next-Generation Sequencing in the Study of Cancer Evolution
+
+**** TODO Extract information from vcf files
+How to extract variant count information from vcf 
+using vcftools?
+**** TODO Rerun ThetA2
+
+**** TODO Sciclone (R package)
+***** Review Article
+
+**** TODO PhyloSub
+***** TODO Read 
+***** TODO Install package article
+Every Python module is installed except that I have not been able to compile the following:
+
+g++ -o mh.o  mh.cpp  util.cpp `gsl-config --cflags --libs`
+
+** <2015-01-13 Tue>
+*** Mohler Alignment [3/3]
+**** DONE Merge bams
+BAM file names have pub id.
+**** DONE RSeQC
+**** DONE Report
+
+*** Tumor Project [1/4]
+    
+**** DONE Sciclone (R package) [2/2]
+***** DONE Review Article
+***** DONE Run
+
+**** TODO PhyloSub 
+***** TODO Read 
+***** TODO Install package
+Every Python module is installed except that I have not been able to compile the following:
+
+g++ -o mh.o  mh.cpp  util.cpp `gsl-config --cflags --libs`
+
+**** TODO Extract information from GATK vcf files
+How to extract variant count information from vcf 
+using vcftools?
+
+**** TODO Rerun ThetA2
+
+** <2015-01-14 Wed>
+*** Tumor Project [0/2]
+**** TODO PhyloSub 
+***** TODO Read 
+***** DONE Install package
+Every Python module is installed except that I have not been able to compile the following:
+
+g++ -o mh.o  mh.cpp  util.cpp `gsl-config --cflags --libs`
+***** DONE Run the test script
+
+**** TODO Extract information from GATK vcf files
+How to extract variant count information from vcf 
+using vcftools?
+
+
+** <2015-01-15 Thu>
+*** DONE Review current submitted materials
+**** Enhance proteomics package
+**** Change somatic SNP files in tumor project
+     Change frome Mutekt to Strelka
+***** Rerun SciClone
+***** Rerun ThetA?
+
+
+*** Tumor Project [0/3]
+**** TODO PhyloSub 
+***** TODO Read 
+***** TODO Build up a script
+
+**** TODO Extract information from GATK vcf files
+How to extract variant count information from vcf 
+using vcftools?
+
+
+
+**** TODO SciClone
+***** Rerun with the LOH regions
+***** Document better about the diploid regions
+
+** <2015-01-16 Fri>
+*** Proteome Package
+**** DONE Explore data formats
+**** DONE Read 
+Empirical Bayes Analysis of Variance Component Model 
+for Microarray Data. 
+
+This paper highly relies on what was done in the following:
+Nonconjugate Bayesian Analysis of Variance Component Models (1999)
+
+Also this paper relates to the topic:
+Statistical analysis of relative labeled mass spectrometry data from
+complex samples using ANOVA (2008)
+
+**** Explore the EB model suggested by Feng et al.
+
+**** Compare EB model with MSstats results
+
+* <2015-01-20 Tue>--<2015-01-23 Fri>
+** <2015-01-20 Tue>--<2015-01-23 Fri>
+
+*** Proteome Package [1/4]
+**** DONE Read Empirical Bayes Analysis of Variance Component Models 
+This paper highly relies on what was done in the following:
+Nonconjugate Bayesian Analysis of Variance Component Models (1999)
+
+Also this paper relates to the topic:
+Statistical analysis of relative labeled mass spectrometry data from
+complex samples using ANOVA (2008)
+
+**** TODO Implement EB ANOVA component model
+Use an inverse-gamma fit.
+**** TODO Explore the EB model suggested by Feng et al.
+**** TODO Compare EB model with MSstats results
+
+
+*** Tumor Project [1/2]
+
+**** DONE SciClone [4/4]
+***** DONE Document better about the diploid regions
+***** DONE Prepare strelka format
+***** DONE Rerun with the LOH regions
+***** DONE Run with strelka
+
+**** TODO PhyloSub [0/2]
+***** TODO Read 
+***** TODO Build up a script
+      
+
+* <2015-01-26 Mon>--<2015-01-30 Fri>
+
+** Proteome Package [4/5]
+*** DONE Bayesian Linear Model
+**** DONE Implement model using blme
+
+*** DONE Recheck empirical bayesian model
+
+*** DONE What's wrong with lmerTest?
+It's generating an error and will not provide degrees of freedom.
+
+*** DONE Corrected model from MSstats using lmerTest
+lmerTest is no longer working.
+The degrees of freedom of MSstats depends on number of groups and
+the number of individuals on each of those groups.
+
+*** TODO Check consistency between results
+
+* <2015-02-02 Mon>--<2015-02-06 Fri>
+** Tumor Project [3/3]
+Everything regarding data and outputs can be found here:
+~/Projects/Project_22_Tumor/data/contents.org
+
+*** DONE Analyze remaining samples with sciClone [4/4]
+**** DONE Prepare strelka depths
+**** DONE Prepare formats
+**** DONE Run
+**** DONE Rerun single samples with new cut-off
+
+*** DONE Two sample sciClone plots
+**** DONE Make a script
+**** DONE Add a new cut-off function
+**** DONE Test the script
+
+*** DONE Summarize number of copy number regions
+
+** Mohler Project [2/2]
+*** DONE Finish summarization
+*** DONE Run Cuffdiff
+
+* <2015-02-09 Mon>--<2015-02-13 Fri>
+** Tumor Project [2/2]
+*** DONE Subset CAPTURE regions program
+VCF can be found in
+/home/ecortes/Projects/Project_22_Tumor/data/NEC/SARC*.NEC.vcf
+
+Depth of SNVs can be found in:
+/home/ecortes/Projects/Project_22_Tumor/data/strelka/SARC*NEC.gdepth
+
+*** DONE Check new review (multiple samples)
+**** Review SARC3001
+**** Review SARC3002
+**** DONE Run cut-off script on SARC3, SARC4 and SARC5
+Data can be found:
+/home/ecortes/Projects/Project_22_Tumor/data/ReviewedCNVs/SARC*/*reviewed.cnvs
+
+**** DONE Run SciClone
+Output can be found in:
+/home/ecortes/Projects/Project_22_Tumor/output/sciClone/run5/singles/
+
+** Yingyu Project (miRNA) [3/3]
+*** DONE Fastqc
+*** DONE Alignment
+*** DONE summary
+
+
+* <2015-02-23 Mon>--<2015-02-27 Fri>
+** DONE Tumor Project [5/5]
+*** DONE Organize clean SNVs file
+Can be found in:
+/home/ecortes/Projects/Project_22_Tumor/data/RevSNVsL
+<2015-02-23 Mon>
+
+*** DONE Prepare samples for Sciclone 
+Can be found:
+/home/ecortes/Projects/Project_22_Tumor/data/sciClone/clean2/
+<2015-02-24 Tue>
+
+*** DONE Run Sciclone
+/home/ecortes/Projects/Project_22_Tumor/output/sciClone/run6
+<2015-02-24 Tue>
+
+*** DONE Check running errors
+Most of the errors are related with small number of SNVs compared to the provided regions.
+*** DONE Review Sciclone parameters to optimize the run
+
+** DONE STAR alignment report
+
+<2015-03-02 Mon>--<2015-03-04 Wed>
+
+
+* <2015-04-03 Fri> (GF)
+** Proteomics
+Review the data
+Check MSstats df of data
+Write how does MSstats dfs work and why it is done the wrong way
+Make simulations 3-3
+
+
+* <2015-04-13 Mon>--<2015-04-17 Fri>
+** DONE deFuse
+*** DONE Do summarization
+*** DONE Report summarization
+
+** DONE Run Cicero [3/3] <2015-04-13 Mon>
+*** DONE Step 4
+Problem with the blatserver parameter.
+Problem solved modifying the source code
+
+*** DONE Step 5
+*** DONE Summarize
+
+** DONE reRun Cicero [3/3] <2015-04-17 Fri>
+Only for samples
+CAP001-Td1a_RS-01901947_RNA-ILU
+CAP001-Td1a_RS-01901952_RNA-ILU
+
+*** DONE Step 4
+*** DONE Step 5
+*** DONE Summarize
+
+
+** Isoform Quant [6/6]
+*** DONE Check expression values of many experiments
+Make histogram
+*** DONE Relative abundance histograms
+*** DONE Make quantification script for sampling
+*** DONE Run s60
+*** DONE Run s20
+*** DONE Run s10
+
+
+* <2015-04-20 Mon>--<2015-04-24 Fri>
+
+*** Show results to Dr Wang
+**** To Dos
+***** Run Flux with 60M, 20M, 10M
+***** Run with ZINB
+***** Drop <10 reads genes
+***** Work on the Proteomics project
+Try samples with small number of replicates (3-5) and
+small number of peptides.
+***** Run MAQC data with ZINB
+
+
+** Isoform Quant
+*** DONE Summarize sampling runs
+*** DONE Report output [4/4]
+**** DONE Pie charts (genewise comparison between methods)
+**** DONE Mean tables for methods
+
+
+**** DONE Median tables for methods
+Strange results
+
+**** DONE Simulations' statistics
+***** DONE Relative isoform abundance
+***** DONE Number of transcripts table
+***** DONE Number of genes histogram 
+*** DONE Summarize initial run with metrics
+Make matrices
+**** DONE rms
+**** DONE R2
+**** DONE rho
+
+*** DONE Count reads for s10, s20, s60
+**** DONE makepro.R file to count reads
+**** DONE organize list output into a data frame
+**** DONE Created pseudo pro file with read counts
+
+*** New Chores
+**** Simulate 
+***** DONE 100M
+***** DONE 60M
+***** DONE 20M
+***** DONE 10M
+
+**** DONE Unbury ZINB implementation
+Not found
+
+** Proteomics
+Review the data
+Check MSstats df of data
+Write how does MSstats dfs work and why it is done the wrong way
+Make simulations 3-3
+
+*** DONE Pick the sample: 2FC
+Look for a clean data set.
+Data can be retrieved from 
+~/Documents/Projects/Project_18_Proteomics_Test/scripts/toy2.R
+
+*** DONE Check MSstats output
+*** DONE Compare df of lmTest with MSstats'
+For testing effects the df are the same for both.
+The df is related to the number of samples.
+That will naturally affect power.
+
+*** TODO Analysis 10-10 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+
+*** TODO Analysis 3-3 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+     
+
+*** Note
+**** To check and explain MSstats df calculation
+
+
+* <2015-04-27 Mon>--<2015-05-01 Fri>
+** RNA-Seq [4/7]
+**** DONE Implement ZINB
+**** DONE Test and check ZINB
+Review gradients.
+We can run but slowly using Nelder-Mead optimization.
+
+**** DONE Test a couple of genes
+**** DONE Test and review current functions
+especially the partial derivatives of theta!!
+
+** Proteomics [3/5]
+Review the data
+Check MSstats df of data
+Write how does MSstats dfs work and why it is done the wrong way
+Make simulations 3-3
+
+*** DONE Pick the sample: 2FC
+Look for a clean data set.
+Data can be retrieved from 
+~/Documents/Projects/Project_18_Proteomics_Test/scripts/toy2.R
+
+*** DONE Check MSstats output
+*** DONE Compare df of lmTest with MSstats'
+For testing group effects the df are the same for both.
+The df is related to the number of samples.
+That will naturally affect power.
+
+
+
+* <2015-05-04 Mon>--<2015-05-08 Fri>
+     
+** DONE Annotation
+** Mohler Project [3/3]
+*** DONE The plots so far
+Find them files in:
+
+/home/Projects/Project_28_Mohler/output/DEG2res/
+**** DONE Heatmap+Clustering using td groups
+./heat_inter.pdf [euclidean metric, top 100 genes]
+./heat_inter_cord.pdf [correlation metric, top 100 genes]
+
+./heat_inter500.pdf [euclidean metric, top 500 genes]
+./heat_inter_cord500.pdf [correlation metric, top 500 genes]
+
+Top 500 genes 
+Variance Stabilizing Transformation used
+DE inter used!
+
+**** DONE Sample-to-sample clustering
+All genes
+
+***** inter
+./sam-sam_inter_cord.pdf [correlation metric]
+./sam-sam_inter.pdf  [euclidean metric]
+
+***** CAP
+./sam-sam_CAPw.pdf [corr and eucl metric]
+
+**** DONE PCA plots
+***** DONE inter
+./PCA_inter.pdf
+It looks scrampled and messy
+Plot comes from DESeq2, would need some formatting
+
+***** DONE CAP
+./PCA_CAP.pdf
+Can separate nicely at least two groups.
+Check 3 PCs.
+Plot comes from DESeq2, would need some formatting
+
+
+**** TODO Check Hierarchical design
+
+*** DONE Analyses so far
+**** DONE Intra td1
+./intra_*_vs_*_03_20.csv
+
+Pairwise
+Filtering: 2FC and 0.05<pval
+
+**** DONE Inter tds
+./inter_*_vs_*_03_20.csv
+Pairwise
+Filtering: 2FC and 0.05<pval
+
+**** DONE Pairwise CAP DE (CAP wise)
+./CAP00*-Td*_vs_CAP00*-Td*_05_05.csv
+
+
+**** TODO Pairwise CAP DE (experiment wise)
+./CAP00*-Td*_vs_CAP00*-Td*_05_05.csv
+
+
+
+** RNA-Seq [2/6]
+**** DONE Test and check ZINB
+Review gradients.
+We can run but slowly using Nelder-Mead optimization.
+
+**** DONE Test a couple of genes
+**** TODO Test and review current functions
+Especially the partial derivatives of theta!!
+**** TODO Clearly describe the procedure of obtaining all read types
+especially 0-readtypes
+**** TODO Run all the genes with ZINB
+**** TODO Run MAQC with ZINB
+
+
+** Proteomics [3/5]
+Review the data
+Check MSstats df of data
+Write how does MSstats dfs work and why it is done the wrong way
+Make simulations 3-3
+
+*** DONE Pick the sample: 2FC
+Look for a clean data set.
+Data can be retrieved from 
+~/Documents/Projects/Project_18_Proteomics_Test/scripts/toy2.R
+
+*** DONE Check MSstats output
+*** DONE Compare df of lmTest with MSstats'
+For testing group effects the df are the same for both.
+The df is related to the number of samples.
+That will naturally affect power.
+
+
+*** TODO Analysis 10-10 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+
+*** TODO Analysis 3-3 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+     
+
+*** Note
+**** To check and explain MSstats df calculation
+
+
+
+* <2015-05-11 Mon>--<2015-05-15 Fri>
+** RNA-Seq [1/3]
+**** TODO Test and check ZINB
+Review gradients.
+We can run but slowly using Nelder-Mead optimization.
+
+**** DONE Test a couple of genes
+
+     
+**** TODO run ZINB MAQC
+
+** COSMIC    
+*** TODO Download data base
+/home/lliu/cosmic/CosmicComplete.tsv
+*** TODO Check R interfaces
+biomaRt
+*** TODO Quantify Variants
+
+** Proteomics [3/5]
+Review the data
+Check MSstats df of data
+Write how does MSstats dfs work and why it is done the wrong way
+Make simulations 3-3
+
+*** DONE Pick the sample: 2FC
+Look for a clean data set.
+Data can be retrieved from 
+~/Documents/Projects/Project_18_Proteomics_Test/scripts/toy2.R
+
+*** DONE Check MSstats output
+*** DONE Compare df of lmTest with MSstats'
+For testing group effects the df are the same for both.
+The df is related to the number of samples.
+That will naturally affect power.
+
+
+*** TODO Analysis 10-10 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+
+*** TODO Analysis 3-3 [0/5]
+**** TODO Review df calculation mechanism for MSstats
+**** TODO View MSstats output
+**** TODO Check the output from MCMCGlmm
+**** TODO Check EB output
+**** TODO Check MM with corrected degrees of freedom
+
+     
+
+*** Note
+**** To check and explain MSstats df calculation
+
+   
+* <2015-05-18 Mon>--<2015-05-22 Fri>
+** DONE RNASeq: Smiraglia [5/5]
+*** DONE Data
+/rpcc/hiseq2000raw/pipeline/141031_SN7001317_0120_AC5NLVACXX/Unaligned_idx6/Project_SmiragliaRNASeq/
+*** DONE Alignment
+*** DONE QC report 1
+*** DONE Trimming
+*** DONE QC report 2
+
+** DONE Isoforms [2/3]
+*** DONE Document
+Include theory for the method
+
+*** DONE Summarization
+/home/ecortes/Projects/Project_11.8_PennSeq_Rev/output/res/plots
+**** Pie chart
+**** Performance table
+**** Density comparison
+
+*** TODO MAQC
+
+* <2015-05-26 Tue>--<2015-05-29 Fri>
+** Annotation
+*** Check variants in online browser
+*** Summarize
+
+** Isoforms [1/3]
+/home/ecortes/Projects/Project_11.8_PennSeq_Rev/output/res/plots
+
+*** DONE MACQ [4/4]
+**** DONE Hunt the original script and golden standard data
+Also check how to retrieve results from Project_11.6_MAQC.
+
+Golden standard formatting can be found in:
+/home/ecortes/Projects/Project_11.6_MAQC/scripts/getres2.R
+
+The RData file can be found here:
+setwd('/home/ecortes/Projects/Project_11.6_MAQC/scripts')
+load('../output/plots/cleanPCRgenes.RData') ## gold_sel, g_tr (n_tr>1), N_TR ## (956 genes)
+head(gold_sel); head(g_tr)
+dim(gold_sel)
+
+gold_sel <- gold_sel[N_TR>1,]
+head(gold_sel); dim(gold_sel)
+
+**** DONE Make a script
+Actually there are two scripts; the first within the second one:
+
+/home/ecortes/Projects/Project_11.8_PennSeq_Rev/scripts/prep2BAM.R
+/home/ecortes/Projects/Project_11.8_PennSeq_Rev/scripts/Estimate1MAQC.R
+
+**** DONE Run it
+Output:
+
+
+**** DONE Summarize it 
+
+
+*** TODO Prepare document
+/home/bios/Documents/Projects/Project_11.3_Single_end/Document_new
+
+**** Include MAQC result
+
+
+*** TODO Few ideas and comments
+**** Check performance and accuracy
+**** Check depth and accuracy   
+My guess is that the method can allow more samples with low depth.
+Not very sure if the accuracy will improve. If it does this should be 
+discussed and shown in the paper.
+**** Explain how all reads are obtained
+
+
+* <2015-06-01 Mon>--<2015-06-05 Fri>
+** Annotation [1/1]
+*** DONE Answer Josh <2015-06-01 Mon>
+
+
+** Higgins [1/2]
+*** DONE Batch 9.2 [2/3]
+**** DONE Three comparisons
+**** DONE Summarize comparisons
+**** TODO Intraracial comparisons
+
+
+*** TODO Batch 9.1 [0/3]
+**** TODO Three comparisons
+**** TODO Summarize comparisons
+**** TODO Intraracial comparisons
+
+
+** Bohua [0/0]
+*** QC Report [3/6]
+**** DONE Fastqc
+**** DONE Adapter cutting and fastq
+There's no need so far
+**** DONE Alignment
+Mouse alignment is extremely low
+**** TODO RSeQC
+**** TODO Summarize
+**** TODO Report
+
+
+** RNASeq [0/2]
+*** TODO Meeting (<2015-06-04 Thu>)
+*** TODO Prepare document [2/4]
+/home/bios/Documents/Projects/Project_11.3_Single_end/Document_new
+**** DONE Theory
+**** DONE Presentation of the data set
+**** TODO Performance plots
+
+**** TODO Chop-chop-chop
+Only compare ZINB and P. Also remove sequencing features.
+
+
+* <2015-06-29 Mon>--<2015-07-03 Fri>
+** Proteomics
+*** Reread article 
+Computational Mass Spectrometry-Based Proteomics
+
+*** Reactivate package
+
+*** Simulation
+
+*** Clean
+**** Folders 
+**** Scripts
+**** Data
+
+*** Package
+
+** TCGA
+*** TODO Run deFuse on RNASeq samples
+
+*** TODO Check Somatic mutation files
+
+*** TODO Check the genes
+
+*** TODO Make a list of hotspots
+ 
+ 
+
+* <2015-08-03 Mon>--<2015-08-07 Fri>
+** RNA-Seq 
+*** Run simulation with 5M reads
+**** DONE Generate data    
+*** DONE Run MAQC samples
+*** DONE Find golden standard for each sample
+
+** TCGA
+*** DONE Summarize Fusion detection
+*** DONE Make somatic mutation table KRAS-NRAS
+
+** Pili project
+*** DONE Compare both reports
+*** DONE Check mail for any updates
+
+* <2015-08-10 Mon>--<2015-08-14 Fri>
+** RNASeq
+*** DONE Run MAQC samples
+*** Summarize MAQC 
+**** RPKM function (retrieve it)
+**** Summarize gold-standards
+**** Make bar plots
+
+*** Check scripts
+**** Correct ART function
+**** Extend functions to read BAMS
+
+*** Run 5M sample
+
+
+* Long-term projects
+** DONE Tumor
+*** Run SciCLone
+
+** Proteomics
+*** DONE Compile package
+
+** Single-end quantification article
+The latest copy of the manuscript is under revision. Expecting corrections.
+
+** Paired-end comparison article
+A pipeline has been build up to do the comparisons.
+Comparisons, results and plots have been done.
+No green light to start writing.
+
+** qRNASeq
+The functions have been cleaned, tested and explained in a script for single-end reads.
+Waiting for Qiang to send the conversion of BAM files into BED,  because the whole coding has
+been done based on bed files.
+** Alternative Splicing comparison
+
+
+* Bible
+1. Old Testament
+   1. Characters
+      - Abraham :: Father of faith
+      - Moses :: Liberator
+      - Joshua :: 
+      - [ ] Ruth :: 
+	+ Joseph :: 
+
+   2. Books
+   3. Main Events
+2. New Testament
+
+
+
+To customize todo's locally:
+
+# #+TODO: TODO(t) | DONE(d)
+# #+TODO: REPORT(r) BUG(b) KNOWNCAUSE(k) | FIXED(f)
+# #+TODO: | CANCELED(c)
+
+Update org mode instructions with: C-c C-c
